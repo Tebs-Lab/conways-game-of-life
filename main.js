@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   document.body.append(startStopBut);
   document.body.append(sim.canvas);
 
+  sim.start();
   startStopBut.addEventListener('click', () => {
     if(sim.intervalId) {
       sim.stop();
