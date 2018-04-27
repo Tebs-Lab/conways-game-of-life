@@ -1,29 +1,73 @@
 // Main Entry Point:
 document.addEventListener("DOMContentLoaded", function(event) {
   // Data setup
-  var rows = 200;
-  var cols = 100;
-  var chanceOfLife = .01;
+  var pixelSize = 20;
+  var cols = (window.outerHeight / pixelSize) - 2;
+  var rows = (window.outerWidth / pixelSize) - 2;
+  var chanceOfLife = .1;
   var interRoundDelayMS = 200;
-  var pixelSize = 12;
 
   let grid = generateGrid(rows, cols, chanceOfLife);
   let canvas = document.createElement('canvas');
   let canvasCtx = canvas.getContext('2d');
 
   // Canvas setup
-  let width = pixelSize * rows
-  let height = pixelSize * cols
+  let width = pixelSize * cols
+  let height = pixelSize * rows
   canvas.width = width;
   canvas.height = height;
   document.body.append(canvas);
   paintGrid(grid, canvasCtx, pixelSize);
 
+  // Game State
+  let mouseIsDown = false;
+  let paused = true;
+  let goButton = document.createElement('button')
+  goButton.innerHTML = "Start Life";
+  document.body.append(goButton);
+
+  // Adding Event Handlers
   setInterval(() => {
-    updateGrid(grid);
-    paintGrid(grid, canvasCtx, pixelSize);
+    if(!mouseIsDown && !paused) {
+      updateGrid(grid);
+      paintGrid(grid, canvasCtx, pixelSize);
+    }
   }, interRoundDelayMS);
+
+  goButton.addEventListener('click', (e) => {
+    paused = false;
+  });
+
+  canvas.addEventListener('mousedown', (e) => {
+    setPixelAlive(e, grid, canvasCtx, pixelSize)
+  });
+
+  canvas.addEventListener('mousemove', (e) =>  {
+    if(mouseIsDown) setPixelAlive(e, grid, canvasCtx, pixelSize);
+  });
+
+  // Capture mouse state for click and drag features
+  window.addEventListener('mousedown', () => {
+    mouseIsDown = true;
+  });
+
+  window.addEventListener('mouseup', () => {
+    mouseIsDown = false;
+  });
 });
+
+/**
+  paint the pixel that some MouseEvent is being fired for.
+
+  @param {MouseEvent} mouseEvent - the event being triggered
+*/
+function setPixelAlive(mouseEvent, grid, canvasCtx, pixelSize) {
+  // Get the relative position (offset) within the canvas
+  let x = Math.floor(mouseEvent.offsetX / pixelSize);
+  let y = Math.floor(mouseEvent.offsetY / pixelSize);
+  grid[y][x] = true;
+  paintPixel(grid, canvasCtx, y, x, pixelSize);
+}
 
 function generateGrid(rows, cols, chanceOfLife = .1) {
   let grid = [];
@@ -60,7 +104,7 @@ function updateSquare(grid, row, col) {
   let neighbours = 0;
   for(let i = row - 1; i <= row + 1; i++) {
     for(let j = col - 1; j <= col + 1; j++) {
-
+      if(i === row && j === col) continue;
       if(grid[i] && grid[i][j]) {
           neighbours++;
       }
@@ -75,13 +119,16 @@ function updateSquare(grid, row, col) {
 }
 
 function paintGrid(grid, canvasCtx, pixelSize) {
-  let deathStyle = '#ADD8E6';
-  let lifeStyle = '#000000';
-
   for(let i = 0; i < grid.length; i++) {
     for(let j = 0; j < grid[0].length; j++) {
-      canvasCtx.fillStyle = grid[i][j] ? lifeStyle : deathStyle;
-      canvasCtx.fillRect(j * pixelSize, i * pixelSize, pixelSize, pixelSize);
+      paintPixel(grid, canvasCtx, i, j, pixelSize);
     }
   }
+}
+
+function paintPixel(grid, canvasCtx, i, j, pixelSize) {
+  let deathStyle = '#ADD8E6';
+  let lifeStyle = '#000000';
+  canvasCtx.fillStyle = grid[i][j] ? lifeStyle : deathStyle;
+  canvasCtx.fillRect(j * pixelSize, i * pixelSize, pixelSize, pixelSize);
 }
