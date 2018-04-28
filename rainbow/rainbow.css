@@ -14,7 +14,6 @@ canvas {
   border: 2px solid black;
 }
 
-
 button {
   width: 10%;
   align-self: center;
@@ -27,5 +26,5 @@ button {
   text-align: center;
   cursor: pointer;
   border-radius: 4px;
-  background: #eeeeee;
+  background: linear-gradient(to left, orange, yellow, green, cyan, blue, violet);
 }
