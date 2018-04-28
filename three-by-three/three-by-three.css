@@ -1,3 +1,7 @@
+body {
+  background-color: #a7efbf;
+}
+
 #container {
   margin: auto;
   display: grid;

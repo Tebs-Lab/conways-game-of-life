@@ -201,29 +201,62 @@ class Simulation {
     updated when it is clicked (or dragged-over)
   */
   registerMouseListeners() {
-    this.canvas.addEventListener('mousedown', (e) => {
-      let x = Math.floor(e.offsetX / this.pixelSize);
-      let y = Math.floor(e.offsetY / this.pixelSize);
-      this.grid[y][x].handleClick();
-      this.paintPixel(y, x);
-    });
-
-    this.canvas.addEventListener('mousemove', (e) =>  {
+    bindMultipleEventListener(this.canvas, ['mousemove', 'touchmove'], (e) =>  {
+      e.preventDefault();
       if(this.mouseIsDown) {
-        let x = Math.floor(e.offsetX / this.pixelSize);
-        let y = Math.floor(e.offsetY / this.pixelSize);
+        let x, y;
+        if(e.touches) {
+          let rect = e.target.getBoundingClientRect();
+          x = Math.floor((e.touches[0].pageX - rect.left) / this.pixelSize);
+          y = Math.floor((e.touches[0].pageY - rect.top) / this.pixelSize);
+        }
+        else {
+          x = Math.floor(e.offsetX / this.pixelSize);
+          y = Math.floor(e.offsetY / this.pixelSize);
+        }
+
+        // let x = Math.floor(e.offsetX / this.pixelSize) || Math.floor(e.touches[0].clientX / this.pixelSize);
+        // let y = Math.floor(e.offsetY / this.pixelSize) ||  Math.floor(e.touches[0].clientY / this.pixelSize);
         this.grid[y][x].handleClick();
         this.paintPixel(y, x);
       }
     });
 
     // Capture mouse state for click and drag features
-    this.canvas.addEventListener('mousedown', () => {
+    bindMultipleEventListener(this.canvas, ['mousedown', 'touchstart'], (e) => {
+      e.preventDefault();
+      let rect = e.target.getBoundingClientRect();
+      let x, y;
+      if(e.touches) {
+        let rect = e.target.getBoundingClientRect();
+        x = Math.floor((e.touches[0].pageX - rect.left) / this.pixelSize);
+        y = Math.floor((e.touches[0].pageY - rect.top) / this.pixelSize);
+      }
+      else {
+        x = Math.floor(e.offsetX / this.pixelSize);
+        y = Math.floor(e.offsetY / this.pixelSize);
+      }
+      
+      // let x = Math.floor(e.offsetX / this.pixelSize) || Math.floor(e.touches[0].clientX / this.pixelSize);
+      // let y = Math.floor(e.offsetY / this.pixelSize) ||  Math.floor(e.touches[0].clientY / this.pixelSize);
+      console.log(x, y, e);
+      this.grid[y][x].handleClick();
+      this.paintPixel(y, x);
       this.mouseIsDown = true;
     });
 
-    this.canvas.addEventListener('mouseup', () => {
+    bindMultipleEventListener(this.canvas, ['mouseup', 'touchend'], (e) => {
+      e.preventDefault();
       this.mouseIsDown = false;
     });
   }
+}
+
+/*
+  This helper function makes binding the listeners cleaner
+*/
+function bindMultipleEventListener(element, eventNames, f) {
+  eventNames.forEach((eventName) => {
+    element.addEventListener(eventName, f);
+  });
 }

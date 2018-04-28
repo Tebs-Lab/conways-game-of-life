@@ -14,15 +14,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   let sim = new Simulation(rows, cols, pixelSize, roundDelay, chanceOfLife);
   container.append(sim.canvas);
+  sim.start();
 
   let startStopBut = document.getElementById('start-stop');
-  sim.start();
-  startStopBut.addEventListener('click', () => {
-    if(sim.intervalId) {
-      sim.stop();
-    }
-    else {
-      sim.start();
-    }
+  ['click', 'touch'].map((eventName) => {
+    startStopBut.addEventListener(eventName, () => {
+      if(sim.intervalId) {
+        sim.stop();
+      }
+      else {
+        sim.start();
+      }
+    });
   });
 });

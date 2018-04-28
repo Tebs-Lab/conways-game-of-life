@@ -25,12 +25,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
   }
 
   sim.start();
-  startStopBut.addEventListener('click', () => {
-    if(sim.intervalId) {
-      sim.stop();
-    }
-    else {
-      sim.start();
-    }
+
+  let startStopBut = document.getElementById('start-stop');
+  ['click', 'touch'].map((eventName) => {
+    startStopBut.addEventListener(eventName, () => {
+      if(sim.intervalId) {
+        sim.stop();
+      }
+      else {
+        sim.start();
+      }
+    });
   });
 });
