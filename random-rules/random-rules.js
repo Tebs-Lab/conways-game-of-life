@@ -1,6 +1,6 @@
 // Main Entry Point:
 document.addEventListener("DOMContentLoaded", function(event) {
-  let pixelSize = 4;
+  let pixelSize = 12;
   let roundDelay = 200;
   let chanceOfLife = .1;
   let numberOfSims = 2;
