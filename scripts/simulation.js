@@ -1,14 +1,12 @@
-// Fix this crap...
-const deathStyle = '#ADD8E6';
-const lifeStyle = '#000000';
-
 class SimEntity {
   /*
     This simple sim entity for conways game of life is alive
     or not alive.
   */
-  constructor(alive = false) {
+  constructor(alive = false, lifeStyle = '#000000', deathStyle = '#ADD8E6') {
     this.alive = alive;
+    this.lifeStyle = lifeStyle;
+    this.deathStyle = deathStyle;
   }
 
   /*
@@ -52,7 +50,7 @@ class SimEntity {
       alive = true;
     }
 
-    return new SimEntity(alive);
+    return new SimEntity(alive, this.lifeStyle, this.deathStyle);
   }
 
   /*
@@ -67,14 +65,14 @@ class SimEntity {
     Provided with a canvas context, paint ourselves!
   */
   setPaintStyles(canvasCtx) {
-    canvasCtx.fillStyle = this.alive ? lifeStyle : deathStyle;
+    canvasCtx.fillStyle = this.alive ? this.lifeStyle : this.deathStyle;
   }
 }
 
 class Simulation {
   /*
     Create a new simulation. A simulation is comprised of a
-    2D data grid (rows-by-cols) of SimEntities, a canvas element
+    2D data grid (rows-by-cols) of tities, a canvas element
     and a canvas context.
   */
   constructor(rows, cols, pixelSize, interRoundDelay, initialChanceOfLife) {
@@ -215,11 +213,11 @@ class Simulation {
     });
 
     // Capture mouse state for click and drag features
-    window.addEventListener('mousedown', () => {
+    this.canvas.addEventListener('mousedown', () => {
       this.mouseIsDown = true;
     });
 
-    window.addEventListener('mouseup', () => {
+    this.canvas.addEventListener('mouseup', () => {
       this.mouseIsDown = false;
     });
   }

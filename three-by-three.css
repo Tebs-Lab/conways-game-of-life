@@ -1,0 +1,10 @@
+#container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+canvas {
+  margin: 3px;
+  border: 2px solid black;
+}
