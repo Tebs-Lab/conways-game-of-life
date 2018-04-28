@@ -49,7 +49,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
   });
 
   document.querySelector('#random-rules-button').addEventListener('click', (e) => {
-    allSims.forEach((sim) => { rotateSim(sim, ruleSets) });
+    allSims.forEach((sim) => {
+      let ruleIndex = Math.floor(Math.random() * ruleSets.length);
+      let rules = ruleSets[ruleIndex];
+      resetRules(sim, generateUpdateFunction(...rules));
+
+      rulesForm.querySelector('#underpopulation').value = rules[0];
+      rulesForm.querySelector('#reproduction').value = rules[1];
+      rulesForm.querySelector('#overpopulation').value = rules[2];
+    });
   });
 
   let rainbow = false;
