@@ -59,7 +59,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
       let [lifeStyle, deathStyle] = randomColorPair();
       let rules = ruleSets[rand(0, ruleSets.length - 1)];
 
-      console.log(rules);
       sim.grid.forEach((row) => {
         row.forEach((entity) => {
           entity.lifeStyle = lifeStyle;
