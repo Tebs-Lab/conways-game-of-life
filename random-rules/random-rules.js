@@ -3,15 +3,22 @@ document.addEventListener("DOMContentLoaded", function(event) {
   let pixelSize = 12;
   let roundDelay = 200;
   let chanceOfLife = .1;
-  let numberOfSims = 2;
+  let simRows = 4;
+  let simCols = 4;
+  let numberOfSims = simRows * simCols;
 
   let container = document.getElementById('container');
   let containerWidth = window.innerWidth * .90;
   let containerHeight = window.innerHeight * .90;
-  let cols = containerWidth / (2 * pixelSize);
-  let rows = containerHeight /  pixelSize;
+  let cols = containerWidth / (simRows * pixelSize);
+  let rows = containerHeight / (simCols * pixelSize);
   container.style.height = containerHeight + 'px';
   container.style.width = containerWidth + 'px';
+  container.style.gridTemplateColumns = `repeat(${simCols}, 1fr)`;
+  container.style.gridTemplateRows = `repeat(${simRows}, 1fr)`;
+  console.log(container);
+  //: repeat(2, 1fr);
+  //grid-template-rows:
 
   let ruleSets = [];
   for(let underpopulation = 1; underpopulation < 4; underpopulation++) {

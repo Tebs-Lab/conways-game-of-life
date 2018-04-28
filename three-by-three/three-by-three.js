@@ -1,7 +1,7 @@
 // Main Entry Point:
 document.addEventListener("DOMContentLoaded", function(event) {
-  let pixelSize = 12;
-  let roundDelay = 200;
+  let pixelSize = 8;
+  let roundDelay = 100;
   let chanceOfLife = .4;
 
   let container = document.getElementById('container');
