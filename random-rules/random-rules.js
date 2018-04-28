@@ -1,6 +1,6 @@
 // Main Entry Point:
 document.addEventListener("DOMContentLoaded", function(event) {
-  let pixelSize = 12;
+  let pixelSize = 4;
   let roundDelay = 200;
   let chanceOfLife = .1;
   let numberOfSims = 2;
@@ -14,10 +14,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
   container.style.width = containerWidth + 'px';
 
   let ruleSets = [];
-  for(let i = 1; i < 4; i++) {
-    for (let j = 1; j < 4; j++) {
-      for (let k = 1; k < 4; k++) {
-        ruleSets.push([i, j, k]);
+  for(let underpopulation = 1; underpopulation < 4; underpopulation++) {
+    for (let reproduction = 0; reproduction < 4; reproduction++) {
+      for (let overpopulation = 1; overpopulation < 8; overpopulation++) {
+        ruleSets.push([underpopulation, reproduction, overpopulation]);
       }
     }
   }
@@ -40,17 +40,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
     sim.advanceRound();
     sim.repaint();
     sim.start();
-
-
-    // Now add 10% "terminators" to the rules
-    // And 30% "Rebirths"
-    let n = ruleSets.length;
-    for(let i = 0; i < n / 10; i++) {
-      ruleSets.push([4, 3, 6]);
-      ruleSets.push([2, 0, 5])
-      ruleSets.push([3, 0, 8])
-      ruleSets.push([4, 1, 9])
-    }
 
     // Set this sim to reset it's rules occasionally!
     let waitPeriod = (Math.floor(Math.random() * 5000)) + 5000;
