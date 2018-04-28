@@ -236,10 +236,7 @@ class Simulation {
         x = Math.floor(e.offsetX / this.pixelSize);
         y = Math.floor(e.offsetY / this.pixelSize);
       }
-      
-      // let x = Math.floor(e.offsetX / this.pixelSize) || Math.floor(e.touches[0].clientX / this.pixelSize);
-      // let y = Math.floor(e.offsetY / this.pixelSize) ||  Math.floor(e.touches[0].clientY / this.pixelSize);
-      console.log(x, y, e);
+
       this.grid[y][x].handleClick();
       this.paintPixel(y, x);
       this.mouseIsDown = true;

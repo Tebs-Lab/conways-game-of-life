@@ -1,0 +1,20 @@
+body {
+  background-color: #a7efbf;
+  display: grid;
+  grid-template-rows: 10% 90%;
+}
+
+#sim-parameters {
+  justify-self: center;
+}
+
+#container {
+  margin: auto;
+  display: grid;
+  /*grid-template-columns: repeat(2, 1fr);*/
+}
+
+canvas {
+  margin: 2px;
+  border: 2px solid black;
+}

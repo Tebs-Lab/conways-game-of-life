@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>The Game Of Life</title>
+    <link rel="stylesheet" href="click-to-toggle.css">
+    <script type="text/javascript" src="../scripts/simulation.js"></script>
+    <script type="text/javascript" src="click-to-toggle.js"></script>
+  </head>
+  <body>
+    <form id="sim-parameters">
+      <input id="underpopulation" type="number" min=0 max=9>
+      <input id="reproduction" type="number" min=0 max=9>
+      <input id="overpopulation" type="number" min=0 max=9>
+      <button id="update-rules-button">Update Rules</button>
+      <button id="random-rules-button">Random Rules</button>
+      <button id="toggle-rainbow-button">Rainbow</button>
+    </form>
+    <div id="container">
+    </div>
+  </body>
+</html>
