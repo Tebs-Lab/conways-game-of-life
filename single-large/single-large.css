@@ -10,13 +10,11 @@ body {
 }
 
 canvas {
-  margin: auto;
   border: 2px solid black;
 }
 
 
 button {
-  width: 10%;
   align-self: center;
   justify-self: center;
   border: 2px solid black;
@@ -28,4 +26,5 @@ button {
   cursor: pointer;
   border-radius: 4px;
   background: #eeeeee;
+  color: #000000;
 }

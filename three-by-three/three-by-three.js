@@ -3,8 +3,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
   let pixelSize = 12;
   let roundDelay = 200;
   let chanceOfLife = .4;
-  // let rows = 20;
-  // let cols = 20;
 
   let container = document.getElementById('container');
   let containerWidth = window.innerWidth * .90;
