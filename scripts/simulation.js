@@ -3,10 +3,15 @@ class SimEntity {
     This simple sim entity for conways game of life is alive
     or not alive.
   */
-  constructor(alive = false, lifeStyle = '#000000', deathStyle = '#ADD8E6') {
+  constructor(alive = false, lifeStyle = '#000000', deathStyle = '#ADD8E6', update = null) {
     this.alive = alive;
     this.lifeStyle = lifeStyle;
     this.deathStyle = deathStyle;
+
+    // TODO: check for function?
+    if(update !== null) {
+      this.update = update;
+    }
   }
 
   /*
@@ -50,7 +55,7 @@ class SimEntity {
       alive = true;
     }
 
-    return new SimEntity(alive, this.lifeStyle, this.deathStyle);
+    return new SimEntity(alive, this.lifeStyle, this.deathStyle, this.update);
   }
 
   /*

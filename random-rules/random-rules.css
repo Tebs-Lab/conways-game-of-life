@@ -1,0 +1,10 @@
+#container {
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+canvas {
+  margin: 2px;
+  border: 2px solid black;
+}
