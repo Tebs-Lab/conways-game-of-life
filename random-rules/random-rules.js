@@ -41,17 +41,30 @@ document.addEventListener("DOMContentLoaded", function(event) {
     sim.repaint();
     sim.start();
 
+
+    // Now add 10% "terminators" to the rules
+    // And 30% "Rebirths"
+    let n = ruleSets.length;
+    for(let i = 0; i < n / 10; i++) {
+      ruleSets.push([4, 3, 6]);
+      ruleSets.push([2, 0, 5])
+      ruleSets.push([3, 0, 8])
+      ruleSets.push([4, 1, 9])
+    }
+
     // Set this sim to reset it's rules occasionally!
     let waitPeriod = (Math.floor(Math.random() * 5000)) + 5000;
     setInterval(() => {
-      console.log("UPDATE");
       waitPeriod = (Math.floor(Math.random() * 5000)) + 5000;
       let [lifeStyle, deathStyle] = randomColorPair();
+      let rules = ruleSets[rand(0, ruleSets.length - 1)];
+
+      console.log(rules);
       sim.grid.forEach((row) => {
         row.forEach((entity) => {
           entity.lifeStyle = lifeStyle;
           entity.deathStyle = deathStyle;
-          entity.update = generateUpdateFunction(...ruleSets[rand(0, ruleSets.length - 1)]);
+          entity.update = generateUpdateFunction(...rules);
         });
       });
     }, waitPeriod);
@@ -72,7 +85,7 @@ function randomColorPair() {
   ]
 }
 
-function generateUpdateFunction(underpopulation, reproduction, overpopulation) {
+function generateUpdateFunction(underpopulation, reproduction, survive) {
   return function randomUpdate(neighbors) {
     let sum = 0;
     let alive = this.alive;
@@ -86,7 +99,7 @@ function generateUpdateFunction(underpopulation, reproduction, overpopulation) {
       if(sum < underpopulation){
         alive = false;
       }
-      else if(sum <= overpopulation) {
+      else if(sum <= survive) {
         alive = true;
       }
       else {
