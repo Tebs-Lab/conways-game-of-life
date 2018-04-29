@@ -8,15 +8,28 @@
     <script type="text/javascript" src="click-to-toggle.js"></script>
   </head>
   <body>
-    <form id="sim-parameters">
-      <input id="underpopulation" type="number" min=0 max=9>
-      <input id="reproduction" type="number" min=0 max=9>
-      <input id="overpopulation" type="number" min=0 max=9>
-      <button id="update-rules-button">Update Rules</button>
-      <button id="random-rules-button">Random Rules</button>
-      <button id="toggle-rainbow-button">Rainbow</button>
-    </form>
     <div id="container">
+      <form id="sim-parameters">
+        <div>
+          <label for="underpopulation" >Death by Loneliness:</label>
+          <input id="underpopulation" name="underpopulation" type="number" min=0 max=9>
+        </div>
+
+        <div>
+          <label for="reproduction">Parents Required:</label>
+          <input id="reproduction" name="reproduction" type="number" min=0 max=9>
+        </div>
+        <div>
+          <label for="overpopulation">Death by Crowding:</label>
+          <input id="overpopulation" name="overpopulation" type="number" min=0 max=9>
+        </div>
+
+        <button id="update-rules-button">Update Rules</button>
+        <button id="random-rules-button">Random Rules</button>
+        <button id="toggle-rainbow-button">Rainbow</button>
+        <button id="random-color-button">Random Colors</button>
+        <button id="reset-life-button">Reset Life</button>
+      </form>
     </div>
   </body>
 </html>

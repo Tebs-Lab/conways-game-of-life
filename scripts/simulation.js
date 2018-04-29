@@ -3,14 +3,14 @@ class SimEntity {
     This simple sim entity for conways game of life is alive
     or not alive.
   */
-  constructor(alive = false, lifeStyle = '#000000', deathStyle = '#ADD8E6', update = null) {
+    constructor(alive = false, lifeStyle = '#000000', deathStyle = '#ADD8E6', update = false) {
     this.alive = alive;
     this.lifeStyle = lifeStyle;
     this.deathStyle = deathStyle;
 
     // TODO: check for function?
-    if(update !== null) {
-      this.update = update;
+    if(update !== false) {
+      this.update = update.bind(this);
     }
   }
 
@@ -80,7 +80,7 @@ class Simulation {
     2D data grid (rows-by-cols) of tities, a canvas element
     and a canvas context.
   */
-  constructor(rows, cols, pixelSize, interRoundDelay, initialChanceOfLife) {
+  constructor(rows, cols, pixelSize, interRoundDelay, initialChanceOfLife, updateFn = false) {
     this.rows = rows;
     this.cols = cols;
     this.pixelSize = pixelSize;
@@ -94,7 +94,14 @@ class Simulation {
     for (let i = 0; i < rows; i++) {
       this.grid.push([]);
       for (let j = 0; j < cols; j++) {
-        this.grid[i].push(new SimEntity(Math.random() < initialChanceOfLife))
+        let alive = Math.random() < initialChanceOfLife;
+
+        if(updateFn === false) {
+          this.grid[i].push(new SimEntity(alive));
+        }
+        else {
+          this.grid[i].push(new SimEntity(alive, undefined, undefined, updateFn));
+        }
       }
     }
 

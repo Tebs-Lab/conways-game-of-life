@@ -1,20 +1,52 @@
 body {
   background-color: #a7efbf;
-  display: grid;
-  grid-template-rows: 10% 90%;
 }
 
 #sim-parameters {
+  display: grid;
   justify-self: center;
 }
 
 #container {
   margin: auto;
   display: grid;
-  /*grid-template-columns: repeat(2, 1fr);*/
+  grid-template-columns: repeat(2, 1fr);
 }
 
 canvas {
   margin: 2px;
   border: 2px solid black;
+}
+
+input[type=number] {
+  margin: 5px;
+  padding: 3px;
+}
+
+
+/*input[type=number] {
+  width: 80px;
+  padding: 0 12px;
+  vertical-align: top;
+  text-align: center;
+  outline: none;
+  border: 1px solid #ccc;
+  height: 40px;
+  user-select: none;
+}*/
+
+button, label {
+  font-weight: bold;
+  border: 3px solid #888888;
+  margin-bottom: 2px;
+  font-weight: normal;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 4px;
+  background: #eeeeee;
+  color: #000000;
+}
+
+button {
+  padding: 30px 100px;
 }
