@@ -1,8 +1,8 @@
 // Main Entry Point:
 document.addEventListener("DOMContentLoaded", function(event) {
-  let pixelSize = 8;
+  let pixelSize = 16;
   let roundDelay = 100;
-  let chanceOfLife = .1;
+  let chanceOfLife = .0;
 
   let container = document.getElementById('container');
   let canvasWidth = window.innerWidth * .78;
@@ -79,6 +79,30 @@ function setupEventListeners(sim, ruleSets, startingRules, chanceOfLife) {
   document.querySelector('#random-color-button').addEventListener('click', (e) => {
     randomColors(sim);
   });
+
+  // Pause/Play
+  let pause = () => {
+    if (sim.paused) {
+      sim.start();
+    }
+    else {
+      sim.stop();
+    }
+
+    sim.paused = !sim.paused;
+  }
+
+  window.addEventListener('keydown', (e) => {
+    if(e.which === 90) {
+      pause();
+    }
+  });
+
+  document.querySelector('#pause-play-button').addEventListener('click', (e) => {
+    pause();
+  });
+
+
 
   // Kill all life.
   document.querySelector('#reset-life-button').addEventListener('click', (e) => {
