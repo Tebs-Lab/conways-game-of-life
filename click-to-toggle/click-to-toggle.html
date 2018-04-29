@@ -17,17 +17,23 @@
           </div>
 
           <div>
-            <label for="reproduction">Parents Required:</label>
-            <input id="reproduction" name="reproduction" type="number" min=0 max=9>
-          </div>
-          <div>
             <label for="overpopulation">Death by Crowding:</label>
             <input id="overpopulation" name="overpopulation" type="number" min=0 max=9>
           </div>
 
           <div>
+            <label for="reproduction-min">Parents Required:</label>
+            <input id="reproduction-min" name="reproduction-min" type="number" min=0 max=9>
+          </div>
+
+          <div>
+            <label for="reproduction-max">Max Parents Allowed:</label>
+            <input id="reproduction-max" name="reproduction-max" type="number" min=0 max=9>
+          </div>
+
+          <div>
             <label for="percent-life-reset">Percent Life:</label>
-            <input id="percent-life-reset" name="percent-life-reset" type="number" min=0 max=1 step="0.05">
+            <input id="percent-life-reset" name="percent-life-reset" type="number" min=0 max=1 step="0.001">
           </div>
         </div>
 
@@ -36,6 +42,7 @@
         <button id="toggle-rainbow-button">Rainbow</button>
         <button id="random-color-button">Random Colors</button>
         <button id="reset-life-button">Reset Life</button>
+        <button id="toggle-rules-box">Toggle Rule Box Mode</button>
       </form>
     </div>
   </body>

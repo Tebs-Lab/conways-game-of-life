@@ -5,14 +5,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
   let chanceOfLife = .1;
 
   let container = document.getElementById('container');
-  let canvasWidth = window.innerWidth * .80;
+  let canvasWidth = window.innerWidth * .78;
   let canvasHeight = window.innerHeight * .95;
   let cols = canvasWidth / pixelSize;
   let rows = canvasHeight / pixelSize;
 
   let ruleSets = generateRuleSets();
-  let ruleIndex = Math.floor(Math.random() * ruleSets.length);
-  let startingRules = ruleSets[ruleIndex];
+  // let ruleIndex = Math.floor(Math.random() * ruleSets.length);
+  let startingRules = [2, 3, 3, 3];
   let startingUpdate = generateUpdateFunction(...startingRules);
   let sim = new Simulation(rows, cols, pixelSize, roundDelay, chanceOfLife, startingUpdate);
 
@@ -32,8 +32,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 function setupEventListeners(sim, ruleSets, startingRules, chanceOfLife) {
   let rulesForm = document.querySelector('#sim-parameters');
   rulesForm.querySelector('#underpopulation').value = startingRules[0];
-  rulesForm.querySelector('#reproduction').value = startingRules[1];
-  rulesForm.querySelector('#overpopulation').value = startingRules[2];
+  rulesForm.querySelector('#overpopulation').value = startingRules[1];
+  rulesForm.querySelector('#reproduction-min').value = startingRules[2];
+  rulesForm.querySelector('#reproduction-max').value = startingRules[3];
   rulesForm.querySelector('#percent-life-reset').value = chanceOfLife;
   rulesForm.addEventListener('submit' , (e) => { e.preventDefault(); });
 
@@ -41,8 +42,9 @@ function setupEventListeners(sim, ruleSets, startingRules, chanceOfLife) {
   document.querySelector('#update-rules-button').addEventListener('click', (e) => {
     let rules = [
       parseInt(rulesForm.querySelector('#underpopulation').value, 10),
-      parseInt(rulesForm.querySelector('#reproduction').value, 10),
-      parseInt(rulesForm.querySelector('#overpopulation').value, 10)
+      parseInt(rulesForm.querySelector('#overpopulation').value, 10),
+      parseInt(rulesForm.querySelector('#reproduction-min').value, 10),
+      parseInt(rulesForm.querySelector('#reproduction-max').value, 10)
     ];
 
     updateRules(sim, generateUpdateFunction(...rules));
@@ -52,11 +54,12 @@ function setupEventListeners(sim, ruleSets, startingRules, chanceOfLife) {
   document.querySelector('#random-rules-button').addEventListener('click', (e) => {
     let ruleIndex = Math.floor(Math.random() * ruleSets.length);
     let rules = ruleSets[ruleIndex];
-    updateRules(sim, generateUpdateFunction(...rules));
+    if(!applyRulesToBox) updateRules(sim, generateUpdateFunction(...rules));
 
     rulesForm.querySelector('#underpopulation').value = rules[0];
-    rulesForm.querySelector('#reproduction').value = rules[1];
-    rulesForm.querySelector('#overpopulation').value = rules[2];
+    rulesForm.querySelector('#overpopulation').value = rules[1];
+    rulesForm.querySelector('#reproduction-min').value = rules[2];
+    rulesForm.querySelector('#reproduction-max').value = rules[3];
   });
 
   // Toggle rainbow mode
@@ -80,18 +83,80 @@ function setupEventListeners(sim, ruleSets, startingRules, chanceOfLife) {
   // Kill all life.
   document.querySelector('#reset-life-button').addEventListener('click', (e) => {
     let chanceOfLife = rulesForm.querySelector('#percent-life-reset').value;
-    resetLife(sim, parseFloat(chanceOfLife).toFixed(2));
+    resetLife(sim, parseFloat(chanceOfLife).toFixed(4));
+
+    // let rules = [
+    //   parseInt(rulesForm.querySelector('#underpopulation').value, 10),
+    //   parseInt(rulesForm.querySelector('#overpopulation').value, 10),
+    //   parseInt(rulesForm.querySelector('#reproduction-min').value, 10),
+    //   parseInt(rulesForm.querySelector('#reproduction-max').value, 10)
+    // ];
+    //
+    // updateRules(sim, generateUpdateFunction(...rules));
+  });
+
+  /**
+   WHACKY EXPERIMENT -- Toggle Life Parameters Between Box
+  **/
+  let applyRulesToBox = false;
+  document.querySelector('#toggle-rules-box').addEventListener('click', (e) => {
+    applyRulesToBox = !applyRulesToBox;
+    if(applyRulesToBox) {
+      e.target.style.background = '#eeee88';
+    }
+    else {
+      e.target.style.background = '#eeeeee';
+    }
+  });
+  let mouseDownX;
+  let mouseDownY;
+  sim.canvas.addEventListener('mousedown', (e) => {
+    mouseDownX = e.offsetX;
+    mouseDownY = e.offsetY;
+  });
+
+  let mouseupX;
+  let mouseupY;
+  sim.canvas.addEventListener('mouseup', (e) => {
+    if(!applyRulesToBox) return;
+    mouseUpX = e.offsetX;
+    mouseUpY = e.offsetY;
+
+    let rowStart = Math.floor(Math.min(mouseUpY, mouseDownY) / sim.pixelSize);
+    let rowStop = Math.ceil(Math.max(mouseUpY, mouseDownY) / sim.pixelSize);
+
+    let colStart = Math.floor(Math.min(mouseUpX, mouseDownX) / sim.pixelSize);
+    let colStop = Math.ceil(Math.max(mouseUpX, mouseDownX) / sim.pixelSize);
 
     let rules = [
       parseInt(rulesForm.querySelector('#underpopulation').value, 10),
-      parseInt(rulesForm.querySelector('#reproduction').value, 10),
-      parseInt(rulesForm.querySelector('#overpopulation').value, 10)
+      parseInt(rulesForm.querySelector('#overpopulation').value, 10),
+      parseInt(rulesForm.querySelector('#reproduction-min').value, 10),
+      parseInt(rulesForm.querySelector('#reproduction-max').value, 10)
     ];
 
-    updateRules(sim, generateUpdateFunction(...rules));
+    applyRulesWithin(sim, rowStart, rowStop, colStart, colStop, generateUpdateFunction(...rules))
   });
 }
 
+/*
+  Given a bounding box, apply the currently selected rules to ONLY the
+  pixels within the provided box.
+*/
+function applyRulesWithin(sim, rowStart, rowStop, colStart, colStop, rules) {
+  let [lifeStyle, deathStyle] = randomColorPair();
+  for(let i = rowStart; i < rowStop; i++) {
+    for(let j = colStart; j < colStop; j++) {
+      sim.grid[i][j].update = rules;
+      sim.grid[i][j].lifeStyle = lifeStyle;
+      sim.grid[i][j].deathStyle = deathStyle;
+    }
+  }
+}
+
+/*
+  Make everything rainbow colored dawwg.
+*/
 function setRainbowScheme(sim) {
   let rows = sim.grid.length;
   let cols = sim.grid[0].length;
@@ -111,9 +176,11 @@ function setRainbowScheme(sim) {
 function generateRuleSets() {
   let ruleSets = [];
   for(let underpopulation = 0; underpopulation < 9; underpopulation++) {
-    for (let reproduction = 0; reproduction < 9; reproduction++) {
-      for (let overpopulation = 0; overpopulation < 9; overpopulation++) {
-        ruleSets.push([underpopulation, reproduction, overpopulation]);
+    for (let reproductionMax = 0; reproductionMax < 9; reproductionMax++) {
+      for (let reproductionMin = 0; reproductionMin < 9; reproductionMin++) {
+        for (let overpopulation = 0; overpopulation < 9; overpopulation++) {
+          ruleSets.push([underpopulation, overpopulation, reproductionMin, reproductionMax]);
+        }
       }
     }
   }
@@ -211,10 +278,13 @@ function randomColorPair() {
   generate an update function with the provided thresholds for "Conway's Rules"
   for a SimulationEntity.
 */
-function generateUpdateFunction(underpopulation, reproduction, survive) {
+function generateUpdateFunction(underpopulation, overpopulation, reproductionMin, reproductionMax) {
   return function randomUpdate(neighbors) {
     let sum = 0;
     let alive = this.alive;
+    if(reproductionMax === undefined || reproductionMax < reproductionMin) {
+      reproductionMax = reproductionMin;
+    }
 
     for(let n of neighbors){
       if(n.alive && n !== this) sum++;
@@ -224,13 +294,10 @@ function generateUpdateFunction(underpopulation, reproduction, survive) {
     if(alive && sum < underpopulation){
       alive = false;
     }
-    else if(alive && sum <= survive) {
-      alive = true;
-    }
-    else if(alive) {
+    else if(alive && sum > overpopulation) {
       alive = false;
     }
-    else if(!alive && sum === reproduction) {
+    else if(!alive && sum >= reproductionMin && sum <= reproductionMax) {
       alive = true;
     }
 
