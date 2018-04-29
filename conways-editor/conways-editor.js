@@ -188,24 +188,6 @@ function generateRuleSets() {
   return ruleSets;
 }
 
-/*
-  Apply a random update function to a provided sim.
-*/
-function rotateSim(sim, ruleSets) {
-  let ruleIndex = Math.floor(Math.random() * ruleSets.length);
-  updateRules(sim, generateUpdateFunction(...ruleSets[ruleIndex]));
-}
-
-/*
-  Generate a new simulation with a random update function.
-*/
-function randomSimulation(rows, cols, pixelSize, roundDelay, chanceOfLife, ruleSets) {
-  let sim = new Simulation(rows, cols, pixelSize, roundDelay, chanceOfLife)
-  let ruleIndex = Math.floor(Math.random() * ruleSets.length);
-  updateRules(sim, generateUpdateFunction(...ruleSets[ruleIndex]));
-
-  return sim;
-}
 
 /*
   Set all the pixels to alive=false

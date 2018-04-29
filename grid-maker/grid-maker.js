@@ -10,7 +10,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     simRows,
     simCols,
     randomRules,
-    randomColors
+    randomColors,
+    autoRefresh
   } = searchObj;
 
   // Defaults
@@ -21,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   simCols = parseInt(simCols, 10) || 4;
   randomRules = randomRules === "on";
   randomColors = randomColors === "on";
+  autoRefresh = autoRefresh || false;
 
   let numberOfSims = simRows * simCols;
   let container = document.getElementById('container');
@@ -33,21 +35,26 @@ document.addEventListener("DOMContentLoaded", function(event) {
   container.style.gridTemplateColumns = `repeat(${simCols}, 1fr)`;
   container.style.gridTemplateRows = `repeat(${simRows}, 1fr)`;
 
-  let ruleSets = [];
-  for(let underpopulation = 1; underpopulation < 4; underpopulation++) {
-    for (let reproduction = 0; reproduction < 4; reproduction++) {
-      for (let overpopulation = 1; overpopulation < 8; overpopulation++) {
-        ruleSets.push([underpopulation, reproduction, overpopulation]);
-      }
-    }
-  }
+  let ruleSets = generateRuleSets();
 
   for (let i = 0; i < numberOfSims; i++) {
     let sim = new Simulation(rows, cols, pixelSize, roundDelay, chanceOfLife)
+    refreshSim(sim);
+
+    container.append(sim.canvas);
+    sim.advanceRound();
+    sim.repaint();
+    sim.start();
+
+    if(autoRefresh) {
+      setInterval(refreshSim.bind(null, sim), 5000 + (Math.random() * 5000));
+    }
+  }
+
+  function refreshSim(sim) {
     let ruleIndex = Math.floor(Math.random() * ruleSets.length);
-
-
     let [lifeStyle, deathStyle] = randomColorPair();
+
     sim.grid.forEach((row) => {
       row.forEach((entity) => {
         if(randomColors) {
@@ -59,18 +66,37 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }
       });
     });
-
-    container.append(sim.canvas);
-    sim.advanceRound();
-    sim.repaint();
-    sim.start();
   }
 });
 
+/*
+  Random generation of many rulesets...
+*/
+function generateRuleSets() {
+  let ruleSets = [];
+  for(let underpopulation = 0; underpopulation < 9; underpopulation++) {
+    for (let reproductionMax = 0; reproductionMax < 9; reproductionMax++) {
+      for (let reproductionMin = 0; reproductionMin < 9; reproductionMin++) {
+        for (let overpopulation = 0; overpopulation < 9; overpopulation++) {
+          ruleSets.push([underpopulation, overpopulation, reproductionMin, reproductionMax]);
+        }
+      }
+    }
+  }
+
+  return ruleSets;
+}
+
+/*
+  Random bounded integer.
+*/
 function rand(min, max) {
     return min + Math.floor(Math.random() * (max - min));
 }
 
+/*
+  Return an Array with two relatively complementary colors.
+*/
 function randomColorPair() {
   let h = rand(1, 360);
   let comp = (h + rand(90, 270) % 360)
