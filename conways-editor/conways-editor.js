@@ -290,7 +290,6 @@ function generateUpdateFunction(underpopulation, overpopulation, reproductionMin
       if(n.alive && n !== this) sum++;
     }
 
-
     if(alive && sum < underpopulation){
       alive = false;
     }

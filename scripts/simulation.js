@@ -40,22 +40,17 @@ class SimEntity {
       if(n.alive && n !== this) sum++;
     }
 
-    if(alive) {
-      if(sum < 2){
-        alive = false;
-      }
-      else if(sum <= 3) {
-        alive = true;
-      }
-      else {
-        alive = false;
-      }
+    if(alive && sum < 2){
+      alive = false;
     }
-    else if (sum === 3) {
+    else if(alive && sum > 3) {
+      alive = false;
+    }
+    else if(!alive && sum >= 3 && sum <= 3) {
       alive = true;
     }
 
-    return new SimEntity(alive, this.lifeStyle, this.deathStyle, this.update);
+    return new SimEntity(alive, this.lifeStyle, this.deathStyle);
   }
 
   /*

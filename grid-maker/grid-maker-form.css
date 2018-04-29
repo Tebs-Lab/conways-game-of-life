@@ -2,20 +2,11 @@ body {
   background-color: #a7efbf;
 }
 
-#sim-parameters {
+form {
   display: grid;
-  justify-self: center;
-}
-
-#container {
+  width: 33%;
   margin: auto;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-}
-
-canvas {
-  margin: 2px;
-  border: 2px solid black;
+  grid-template-columns: repeat(2, 1fr); 
 }
 
 input[type=number] {
@@ -33,9 +24,4 @@ button, label {
   border-radius: 4px;
   background: #eeeeee;
   color: #000000;
-}
-
-#number-group > div {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
 }

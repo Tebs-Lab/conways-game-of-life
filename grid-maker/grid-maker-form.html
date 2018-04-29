@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Generate A Grid!</title>
+    <link rel="stylesheet" href="grid-maker-form.css">
+  </head>
+  <body>
+    <form class="" action="grid.html" method="get">
+      <label for="pixelSize">Pixel Size</label>
+      <input type="number" name="pixelSize" value=12 step=1 placeholder="Pixel Size">
+
+      <label for="roundDelay">Round Time (ms)</label>
+      <input type="number" name="roundDelay" value=200 step=50 placeholder="Round Time (ms)">
+
+      <label for="chanceOfLife">Chance of Life</label>
+      <input type="number" name="chanceOfLife" value=.1 step=.05 placeholder="Chance of Life">
+
+      <label for="simRows">Rows Of Games</label>
+      <input type="number" name="simRows" value=2 step=1 placeholder="Rows Of Games">
+
+      <label for="simCols">Columns Of Games</label>
+      <input type="number" name="simCols" value=2 step=1 placeholder="Columns Of Games">
+
+      <label for="randomColors">Randomize Colors</label>
+      <input type="checkbox" name="randomColors" checked>
+
+      <label for="randomColors">Randomize Rules</label>
+      <input type="checkbox" name="randomRules" checked>
+
+      <input type="submit" name="submit" value="Generate Grid!">
+    </form>
+  </body>
+</html>
