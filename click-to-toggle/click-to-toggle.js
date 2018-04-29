@@ -1,6 +1,6 @@
 // Main Entry Point:
 document.addEventListener("DOMContentLoaded", function(event) {
-  let pixelSize = 12;
+  let pixelSize = 8;
   let roundDelay = 100;
   let chanceOfLife = .1;
 
@@ -23,17 +23,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
   sim.repaint();
   sim.start();
 
-  setupEventListeners(sim, ruleSets, startingRules);
+  setupEventListeners(sim, ruleSets, startingRules, chanceOfLife);
 });
 
 /*
   Set all the event listeners...
 */
-function setupEventListeners(sim, ruleSets, startingRules) {
+function setupEventListeners(sim, ruleSets, startingRules, chanceOfLife) {
   let rulesForm = document.querySelector('#sim-parameters');
   rulesForm.querySelector('#underpopulation').value = startingRules[0];
   rulesForm.querySelector('#reproduction').value = startingRules[1];
   rulesForm.querySelector('#overpopulation').value = startingRules[2];
+  rulesForm.querySelector('#percent-life-reset').value = chanceOfLife;
   rulesForm.addEventListener('submit' , (e) => { e.preventDefault(); });
 
   // Apply the rules from the form
@@ -78,7 +79,16 @@ function setupEventListeners(sim, ruleSets, startingRules) {
 
   // Kill all life.
   document.querySelector('#reset-life-button').addEventListener('click', (e) => {
-    resetLife(sim);
+    let chanceOfLife = rulesForm.querySelector('#percent-life-reset').value;
+    resetLife(sim, parseFloat(chanceOfLife).toFixed(2));
+
+    let rules = [
+      parseInt(rulesForm.querySelector('#underpopulation').value, 10),
+      parseInt(rulesForm.querySelector('#reproduction').value, 10),
+      parseInt(rulesForm.querySelector('#overpopulation').value, 10)
+    ];
+
+    updateRules(sim, generateUpdateFunction(...rules));
   });
 }
 
@@ -133,10 +143,10 @@ function randomSimulation(rows, cols, pixelSize, roundDelay, chanceOfLife, ruleS
 /*
   Set all the pixels to alive=false
 */
-function resetLife(sim) {
+function resetLife(sim, chanceOfLife = .1) {
   sim.grid.forEach((row) => {
     row.forEach((entity) => {
-      entity.alive = false;
+      entity.alive = Math.random() < chanceOfLife;
     });
   });
 }

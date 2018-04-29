@@ -50,3 +50,8 @@ button, label {
 button {
   padding: 30px 100px;
 }
+
+#number-group > div {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}

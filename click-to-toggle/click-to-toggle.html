@@ -10,18 +10,25 @@
   <body>
     <div id="container">
       <form id="sim-parameters">
-        <div>
-          <label for="underpopulation" >Death by Loneliness:</label>
-          <input id="underpopulation" name="underpopulation" type="number" min=0 max=9>
-        </div>
+        <div id="number-group">
+          <div>
+            <label for="underpopulation" >Death by Loneliness:</label>
+            <input id="underpopulation" name="underpopulation" type="number" min=0 max=9>
+          </div>
 
-        <div>
-          <label for="reproduction">Parents Required:</label>
-          <input id="reproduction" name="reproduction" type="number" min=0 max=9>
-        </div>
-        <div>
-          <label for="overpopulation">Death by Crowding:</label>
-          <input id="overpopulation" name="overpopulation" type="number" min=0 max=9>
+          <div>
+            <label for="reproduction">Parents Required:</label>
+            <input id="reproduction" name="reproduction" type="number" min=0 max=9>
+          </div>
+          <div>
+            <label for="overpopulation">Death by Crowding:</label>
+            <input id="overpopulation" name="overpopulation" type="number" min=0 max=9>
+          </div>
+
+          <div>
+            <label for="percent-life-reset">Percent Life:</label>
+            <input id="percent-life-reset" name="percent-life-reset" type="number" min=0 max=1 step="0.05">
+          </div>
         </div>
 
         <button id="update-rules-button">Update Rules</button>
