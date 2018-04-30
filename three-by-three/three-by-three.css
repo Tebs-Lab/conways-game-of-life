@@ -1,15 +1,13 @@
 body {
-  background-color: #a7efbf;
+  background-color: #000000;
 }
 
 #container {
-  margin: auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
 }
 
 canvas {
-  margin: 2px;
   border: 2px solid black;
 }

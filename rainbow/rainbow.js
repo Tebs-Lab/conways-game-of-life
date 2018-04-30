@@ -5,14 +5,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
   let chanceOfLife = .2
 
   let container = document.getElementById('container');
-  let containerWidth = window.innerWidth * .80;
-  let containerHeight = window.innerHeight * .95;
+  let containerWidth = window.innerWidth;
+  let containerHeight = window.innerHeight;
   let cols = containerWidth / pixelSize;
   let rows = containerHeight / pixelSize;
   container.style.height = containerHeight + 'px';
   container.style.width = containerWidth + 'px';
 
-  let sim = new Simulation(rows, cols, pixelSize, roundDelay, chanceOfLife);
+  let sim = createOceanSim(rows, cols, pixelSize, roundDelay, chanceOfLife);
   container.append(sim.canvas);
 
   let diagonalLength = Math.sqrt((rows * rows) + (cols * cols)); //rows^2 + cols^2
@@ -21,20 +21,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
     for(let j = 0; j < cols; j++) {
       let h = Math.floor(Math.sqrt((i * i) + (j * j)) * hueIncrement);
       sim.grid[i][j].lifeStyle = `hsl(${h}, 100%, 60%)`;
+      sim.grid[i][j].deathStyle = '#000000';
     }
   }
 
   sim.start();
-
-  let startStopBut = document.getElementById('start-stop');
-  ['click', 'touch'].map((eventName) => {
-    startStopBut.addEventListener(eventName, () => {
-      if(sim.intervalId) {
-        sim.stop();
-      }
-      else {
-        sim.start();
-      }
-    });
+  window.addEventListener('keydown', (e) => {
+    if(sim.intervalId && e.which === 90) {
+      sim.stop();
+    }
+    else {
+      sim.start();
+    }
   });
 });

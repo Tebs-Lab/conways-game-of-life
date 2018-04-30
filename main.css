@@ -1,4 +1,7 @@
 body {
-  background-color: #a7efbf;
+  display: grid;
+  background-color: #cccccc;
   font-size: 24px;
+  justify-content: center;
+  align-content: center;
 }

@@ -7,18 +7,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
   let simCols = 4;
   let numberOfSims = simRows * simCols;
 
-  let container = document.getElementById('container');
-  let containerWidth = window.innerWidth * .90;
-  let containerHeight = window.innerHeight * .90;
+  let container = document.querySelector('#container');
+  let containerWidth = window.innerWidth * .97;
+  let containerHeight = window.innerHeight * .95;
   let cols = containerWidth / (simRows * pixelSize);
   let rows = containerHeight / (simCols * pixelSize);
+  container.style.displayy = 'grid';
   container.style.height = containerHeight + 'px';
   container.style.width = containerWidth + 'px';
   container.style.gridTemplateColumns = `repeat(${simCols}, 1fr)`;
   container.style.gridTemplateRows = `repeat(${simRows}, 1fr)`;
-  console.log(container);
-  //: repeat(2, 1fr);
-  //grid-template-rows:
 
   let ruleSets = [];
   for(let underpopulation = 1; underpopulation < 4; underpopulation++) {
@@ -65,46 +63,3 @@ document.addEventListener("DOMContentLoaded", function(event) {
     }, waitPeriod);
   }
 });
-
-function rand(min, max) {
-    return min + Math.floor(Math.random() * (max - min));
-}
-
-function randomColorPair() {
-  let h = rand(1, 360);
-  let comp = (h + rand(90, 270) % 360)
-
-  return [
-    `hsl(${h}, 100%, 60%)`,
-    `hsl(${comp}, 100%, 60%)`
-  ]
-}
-
-function generateUpdateFunction(underpopulation, reproduction, survive) {
-  return function randomUpdate(neighbors) {
-    let sum = 0;
-    let alive = this.alive;
-
-    for(let n of neighbors){
-      if(n.alive && n !== this) sum++;
-    }
-
-
-    if(alive) {
-      if(sum < underpopulation){
-        alive = false;
-      }
-      else if(sum <= survive) {
-        alive = true;
-      }
-      else {
-        alive = false;
-      }
-    }
-    else if (sum === reproduction) {
-      alive = true;
-    }
-
-    return new SimEntity(alive, this.lifeStyle, this.deathStyle, randomUpdate);
-  }
-}

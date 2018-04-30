@@ -5,8 +5,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
   let chanceOfLife = .4;
 
   let container = document.getElementById('container');
-  let containerWidth = window.innerWidth * .90;
-  let containerHeight = window.innerHeight * .90;
+  let containerWidth = window.innerWidth * .98;
+  let containerHeight = window.innerHeight * .95;
   let cols = containerWidth / (3 * pixelSize);
   let rows = containerHeight / (3 * pixelSize);
   container.style.height = containerHeight + 'px';
@@ -27,19 +27,3 @@ document.addEventListener("DOMContentLoaded", function(event) {
     sim.start();
   }
 });
-
-function rand(min, max) {
-    return min + Math.floor(Math.random() * (max - min));
-}
-
-function randomColorPair() {
-    let h = rand(1, 360);
-    let comp = (h + rand(30, 180)) % 360
-    // let s = rand(0, 100);
-    // let l = rand(0, 100);
-
-    return [
-      `hsl(${h}, 90%, 50%)`,
-      `hsl(${comp}, 90%, 50%)`
-    ]
-}

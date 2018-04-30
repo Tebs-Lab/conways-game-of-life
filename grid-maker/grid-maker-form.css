@@ -1,12 +1,12 @@
 body {
-  background-color: #a7efbf;
+  background-color: #cccccc;
 }
 
 form {
   display: grid;
   width: 33%;
   margin: auto;
-  grid-template-columns: repeat(2, 1fr); 
+  grid-template-columns: repeat(2, 1fr);
 }
 
 input[type=number] {

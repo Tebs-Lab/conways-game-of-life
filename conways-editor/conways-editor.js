@@ -1,6 +1,10 @@
+// For a wild experience...
+// let sim = createWildOceanSim(rows, cols, pixelSize, roundDelay, chanceOfLife, startingUpdate);
+// let sim = createOceanSim(rows, cols, pixelSize, roundDelay, chanceOfLife, startingUpdate);
+
 // Main Entry Point:
 document.addEventListener("DOMContentLoaded", function(event) {
-  let pixelSize = 16;
+  let pixelSize = 8;
   let roundDelay = 100;
   let chanceOfLife = .0;
 
@@ -11,7 +15,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
   let rows = canvasHeight / pixelSize;
 
   let ruleSets = generateRuleSets();
-  // let ruleIndex = Math.floor(Math.random() * ruleSets.length);
   let startingRules = [2, 3, 3, 3];
   let startingUpdate = generateUpdateFunction(...startingRules);
   let sim = new Simulation(rows, cols, pixelSize, roundDelay, chanceOfLife, startingUpdate);
@@ -107,16 +110,8 @@ function setupEventListeners(sim, ruleSets, startingRules, chanceOfLife) {
   // Kill all life.
   document.querySelector('#reset-life-button').addEventListener('click', (e) => {
     let chanceOfLife = rulesForm.querySelector('#percent-life-reset').value;
-    resetLife(sim, parseFloat(chanceOfLife).toFixed(4));
-
-    // let rules = [
-    //   parseInt(rulesForm.querySelector('#underpopulation').value, 10),
-    //   parseInt(rulesForm.querySelector('#overpopulation').value, 10),
-    //   parseInt(rulesForm.querySelector('#reproduction-min').value, 10),
-    //   parseInt(rulesForm.querySelector('#reproduction-max').value, 10)
-    // ];
-    //
-    // updateRules(sim, generateUpdateFunction(...rules));
+    chanceOfLife = parseFloat(chanceOfLife)
+    resetLife(sim, chanceOfLife);
   });
 
   /**
@@ -161,151 +156,4 @@ function setupEventListeners(sim, ruleSets, startingRules, chanceOfLife) {
 
     applyRulesWithin(sim, rowStart, rowStop, colStart, colStop, generateUpdateFunction(...rules))
   });
-}
-
-/*
-  Given a bounding box, apply the currently selected rules to ONLY the
-  pixels within the provided box.
-*/
-function applyRulesWithin(sim, rowStart, rowStop, colStart, colStop, rules) {
-  let [lifeStyle, deathStyle] = randomColorPair();
-  for(let i = rowStart; i < rowStop; i++) {
-    for(let j = colStart; j < colStop; j++) {
-      sim.grid[i][j].update = rules;
-      sim.grid[i][j].lifeStyle = lifeStyle;
-      sim.grid[i][j].deathStyle = deathStyle;
-    }
-  }
-}
-
-/*
-  Make everything rainbow colored dawwg.
-*/
-function setRainbowScheme(sim) {
-  let rows = sim.grid.length;
-  let cols = sim.grid[0].length;
-  let diagonalLength = Math.sqrt((rows * rows) + (cols * cols)); //rows^2 + cols^2
-  let hueIncrement = 360 / diagonalLength;
-  for(let i = 0; i < rows; i++) {
-    for(let j = 0; j < cols; j++) {
-      let h = Math.floor(Math.sqrt((i * i) + (j * j)) * hueIncrement);
-      sim.grid[i][j].lifeStyle = `hsl(${h}, 100%, 60%)`;
-    }
-  }
-}
-
-/*
-  Random generation of many rulesets...
-*/
-function generateRuleSets() {
-  let ruleSets = [];
-  for(let underpopulation = 0; underpopulation < 9; underpopulation++) {
-    for (let reproductionMax = 0; reproductionMax < 9; reproductionMax++) {
-      for (let reproductionMin = 0; reproductionMin < 9; reproductionMin++) {
-        for (let overpopulation = 0; overpopulation < 9; overpopulation++) {
-          ruleSets.push([underpopulation, overpopulation, reproductionMin, reproductionMax]);
-        }
-      }
-    }
-  }
-
-  return ruleSets;
-}
-
-
-/*
-  Set all the pixels to alive=false
-*/
-function resetLife(sim, chanceOfLife = .1) {
-  sim.grid.forEach((row) => {
-    row.forEach((entity) => {
-      entity.alive = Math.random() < chanceOfLife;
-    });
-  });
-}
-
-/*
-  Update the rules for all the pixels
-*/
-function updateRules(sim, updateFunction) {
-  sim.grid.forEach((row) => {
-    row.forEach((entity) => {
-      entity.update = updateFunction;
-    });
-  });
-}
-
-/*
-  Restore default life/death colors
-*/
-function resetColors(sim, lifeStyle, deathStyle) {
-  sim.grid.forEach((row) => {
-    row.forEach((entity) => {
-      entity.lifeStyle = lifeStyle;
-      entity.deathStyle = deathStyle;
-    });
-  });
-}
-
-/*
-  Give the board random complementary colors
-*/
-function randomColors(sim) {
-  let [lifeStyle, deathStyle] = randomColorPair(sim);
-  sim.grid.forEach((row) => {
-    row.forEach((entity) => {
-      entity.lifeStyle = lifeStyle;
-      entity.deathStyle = deathStyle;
-    });
-  });
-}
-
-/*
-  Random bounded integer.
-*/
-function rand(min, max) {
-    return min + Math.floor(Math.random() * (max - min));
-}
-
-/*
-  Return an Array with two relatively complementary colors.
-*/
-function randomColorPair() {
-  let h = rand(1, 360);
-  let comp = (h + rand(90, 270) % 360)
-
-  return [
-    `hsl(${h}, 100%, 60%)`,
-    `hsl(${comp}, 100%, 60%)`
-  ]
-}
-
-/*
-  generate an update function with the provided thresholds for "Conway's Rules"
-  for a SimulationEntity.
-*/
-function generateUpdateFunction(underpopulation, overpopulation, reproductionMin, reproductionMax) {
-  return function randomUpdate(neighbors) {
-    let sum = 0;
-    let alive = this.alive;
-    if(reproductionMax === undefined || reproductionMax < reproductionMin) {
-      reproductionMax = reproductionMin;
-    }
-
-    for(let n of neighbors){
-      if(n.alive && n !== this) sum++;
-    }
-
-    if(alive && sum < underpopulation){
-      alive = false;
-    }
-    else if(alive && sum > overpopulation) {
-      alive = false;
-    }
-    else if(!alive && sum >= reproductionMin && sum <= reproductionMax) {
-      alive = true;
-    }
-
-    return new SimEntity(alive, this.lifeStyle, this.deathStyle, randomUpdate);
-  }
 }

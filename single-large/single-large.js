@@ -4,16 +4,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
   let roundDelay = 100;
   let chanceOfLife = .2
 
-  let container = document.getElementById('container');
-  let containerWidth = window.innerWidth * .80;
-  let containerHeight = window.innerHeight * .95;
+  let container = document.body;
+  let containerWidth = window.innerWidth * .99;
+  let containerHeight = window.innerHeight * .90;
   let cols = containerWidth / pixelSize;
   let rows = containerHeight / pixelSize;
   container.style.height = containerHeight + 'px';
   container.style.width = containerWidth + 'px';
 
   let sim = new Simulation(rows, cols, pixelSize, roundDelay, chanceOfLife);
-  container.append(sim.canvas);
+  container.prepend(sim.canvas);
   sim.start();
 
   let startStopBut = document.getElementById('start-stop');
