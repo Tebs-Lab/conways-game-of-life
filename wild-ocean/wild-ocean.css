@@ -12,18 +12,3 @@ body {
 canvas {
   border: 2px solid black;
 }
-
-button {
-  align-self: center;
-  justify-self: center;
-  border: 2px solid black;
-  padding: 6px 12px;
-  margin-bottom: 2px;
-  font-size: 14px;
-  font-weight: normal;
-  text-align: center;
-  cursor: pointer;
-  border-radius: 4px;
-  background: linear-gradient(to left, orange, yellow, green, cyan, blue, violet);
-  color: #000000;
-}
