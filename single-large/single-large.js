@@ -2,7 +2,7 @@
 document.addEventListener("DOMContentLoaded", function(event) {
   let pixelSize = 10;
   let roundDelay = 100;
-  let chanceOfLife = .2
+  let chanceOfLife = .1
 
   let container = document.body;
   let containerWidth = window.innerWidth * .99;
