@@ -114,9 +114,9 @@ function rand(min, max) {
 function generateRuleSets() {
   let ruleSets = [];
   for(let underpopulation = 0; underpopulation < 9; underpopulation++) {
-    for (let reproductionMax = 0; reproductionMax < 9; reproductionMax++) {
+    for (let overpopulation = 0; overpopulation < 9; overpopulation++) {
       for (let reproductionMin = 0; reproductionMin < 9; reproductionMin++) {
-        for (let overpopulation = 0; overpopulation < 9; overpopulation++) {
+        for (let reproductionMax = reproductionMin; reproductionMax < 9; reproductionMax++) {
           ruleSets.push([underpopulation, overpopulation, reproductionMin, reproductionMax]);
         }
       }

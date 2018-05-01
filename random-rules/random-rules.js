@@ -1,8 +1,8 @@
 // Main Entry Point:
 document.addEventListener("DOMContentLoaded", function(event) {
-  let pixelSize = 12;
-  let roundDelay = 200;
-  let chanceOfLife = .1;
+  let pixelSize = 8;
+  let roundDelay = 150;
+  let chanceOfLife = .2;
   let simRows = 4;
   let simCols = 4;
   let numberOfSims = simRows * simCols;
@@ -55,6 +55,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
       sim.grid.forEach((row) => {
         row.forEach((entity) => {
+          entity.alive = Math.random() > chanceOfLife;
           entity.lifeStyle = lifeStyle;
           entity.deathStyle = deathStyle;
           entity.update = generateUpdateFunction(...rules);
