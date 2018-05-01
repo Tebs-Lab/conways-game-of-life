@@ -17,12 +17,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
   // Defaults
   pixelSize = parseInt(pixelSize, 10) || 12;
   roundDelay = parseInt(roundDelay, 10) || 200;
-  chanceOfLife = parseFloat(chanceOfLife) || .1;
   simRows = parseInt(simRows, 10) || 4;
   simCols = parseInt(simCols, 10) || 4;
   randomRules = randomRules === "on";
   randomColors = randomColors === "on";
   autoRefresh = autoRefresh || false;
+  if(isNaN(parseFloat(chanceOfLife))) {
+    chanceOfLife = .1;
+  }
+  else {
+    chanceOfLife = parseFloat(chanceOfLife);
+  }
+  debugger;
 
   let numberOfSims = simRows * simCols;
   let container = document.getElementById('container');
