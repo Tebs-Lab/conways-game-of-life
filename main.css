@@ -1,7 +1,45 @@
 body {
   display: grid;
-  background-color: #cccccc;
+  background-color: #ccccff;
   font-size: 24px;
+  font-family: sans;
   justify-content: center;
   align-content: center;
+}
+
+ul {
+  padding: 2em;
+  font-size: 1.3em;
+  border: solid 4px #999999;
+  border-radius: 25px;
+  background: radial-gradient(#eeeeee, #c0c0c0);
+  text-align: center;
+  color: #111111;
+}
+
+ul li {
+  padding: 1em;
+  font-size: .8em;
+  border-radius: 4px;
+  list-style-type: none;
+  text-align: center;
+  border: solid 2px #dddddd;
+  background-color: #cccccc;
+}
+
+ul li:hover {
+  padding: 1em;
+  border-radius: 4px;
+  border: solid 2px #888888;
+  background-color: #dddddd;
+}
+
+ul a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul p {
+  margin-top: 0;
+  margin-bottom: .5em;
 }
