@@ -127,9 +127,12 @@ function setupEventListeners(sim, ruleSets, startingRules, chanceOfLife) {
       e.target.style.background = '#eeeeee';
     }
   });
+
+  let mouseIsDown = false;
   let mouseDownX;
   let mouseDownY;
   sim.canvas.addEventListener('mousedown', (e) => {
+    mouseIsDown = true;
     mouseDownX = e.offsetX;
     mouseDownY = e.offsetY;
   });
@@ -137,6 +140,7 @@ function setupEventListeners(sim, ruleSets, startingRules, chanceOfLife) {
   let mouseupX;
   let mouseupY;
   sim.canvas.addEventListener('mouseup', (e) => {
+    mouseIsDown = false;
     if(!applyRulesToBox) return;
     mouseUpX = e.offsetX;
     mouseUpY = e.offsetY;
@@ -155,5 +159,18 @@ function setupEventListeners(sim, ruleSets, startingRules, chanceOfLife) {
     ];
 
     applyRulesWithin(sim, rowStart, rowStop, colStart, colStop, generateUpdateFunction(...rules))
+    let [lifeStyle, deathStyle] = randomColorPair();
+    applyColorsWithin(sim, rowStart, rowStop, colStart, colStop, lifeStyle, deathStyle)
+  });
+
+  sim.canvas.addEventListener('mousemove', (e) => {
+    if(!mouseIsDown || !applyRulesToBox) return;
+    let left = Math.min(mouseDownX, e.offsetX);
+    let top = Math.min(mouseDownY, e.offsetY);
+    let right = Math.max(mouseDownX, e.offsetX);
+    let bottom = Math.max(mouseDownY, e.offsetY);
+    sim.repaint(force = true);
+    sim.canvasCtx.fillStyle = "rgba(200, 200, 200, .5)";
+    sim.canvasCtx.fillRect(left, top, Math.abs(left - right), Math.abs(top - bottom));
   });
 }

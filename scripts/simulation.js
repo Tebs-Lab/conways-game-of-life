@@ -174,8 +174,8 @@ class Simulation {
   /*
     Repaint the grid; loop through each entity in the grid to paint.
   */
-  repaint() {
-    if(this.mouseIsDown) return;
+  repaint(force = false) {
+    if(this.mouseIsDown && !force) return;
 
     for(let i = 0; i < this.rows; i++) {
       for(let j = 0; j < this.cols; j++) {
