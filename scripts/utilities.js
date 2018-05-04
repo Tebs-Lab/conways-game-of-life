@@ -81,10 +81,13 @@ function resetLife(sim, chanceOfLife = .1) {
 /*
   Update the rules for all the pixels
 */
-function updateRules(sim, updateFunction) {
+function updateRules(sim, underpopulation, overpopulation, reproductionMin, reproductionMax) {
   sim.grid.forEach((row) => {
     row.forEach((entity) => {
-      entity.update = updateFunction;
+      entity.underpopulation = underpopulation;
+      entity.overpopulation = overpopulation;
+      entity.reproductionMin = reproductionMin;
+      entity.reproductionMax = reproductionMax;
     });
   });
 }
@@ -93,10 +96,14 @@ function updateRules(sim, updateFunction) {
   Given a bounding box, apply the currently selected rules to ONLY the
   pixels within the provided box.
 */
-function applyRulesWithin(sim, rowStart, rowStop, colStart, colStop, rules) {
+function applyRulesWithin(sim, rowStart, rowStop, colStart, colStop,  underpopulation, overpopulation, reproductionMin, reproductionMax) {
   for(let i = rowStart; i < rowStop; i++) {
     for(let j = colStart; j < colStop; j++) {
-      sim.grid[i][j].update = rules;
+      let entity = sim.grid[i][j];
+      entity.underpopulation = underpopulation;
+      entity.overpopulation = overpopulation;
+      entity.reproductionMin = reproductionMin;
+      entity.reproductionMax = reproductionMax;
     }
   }
 }
@@ -124,34 +131,4 @@ function generateRuleSets() {
   }
 
   return ruleSets;
-}
-
-/*
-  generate an update function with the provided thresholds for "Conway's Rules"
-  for a SimulationEntity.
-*/
-function generateUpdateFunction(underpopulation, overpopulation, reproductionMin, reproductionMax) {
-  return function randomUpdate(neighbors) {
-    let sum = 0;
-    let alive = this.alive;
-    if(reproductionMax === undefined || reproductionMax < reproductionMin) {
-      reproductionMax = reproductionMin;
-    }
-
-    for(let n of neighbors){
-      if(n.alive && n !== this) sum++;
-    }
-
-    if(alive && sum < underpopulation){
-      alive = false;
-    }
-    else if(alive && sum > overpopulation) {
-      alive = false;
-    }
-    else if(!alive && sum >= reproductionMin && sum <= reproductionMax) {
-      alive = true;
-    }
-
-    return new SimEntity(alive, this.lifeStyle, this.deathStyle, randomUpdate);
-  }
 }

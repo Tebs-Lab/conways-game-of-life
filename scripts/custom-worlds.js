@@ -3,14 +3,16 @@ function createOceanSim(rows, cols, pixelSize, roundDelay) {
 
   let oceanHeight = Math.floor(rows * .75);
   let liveBar = rand(oceanHeight, sim.grid.length);
-  let conwaysRules = generateUpdateFunction(2, 3, 3, 3);
-  let oceanRules = generateUpdateFunction(2, 2, 3, 3);
+  let [oUnderpopulation, oOverpopulation, oReproductionMin, oReproductionMax] = [2, 2, 3, 3];
   let [oceanLife, oceanDeath] = randomColorPair();
 
   sim.grid.forEach((row, i) => {
     row.forEach((entity) => {
       if(i > oceanHeight){
-        entity.update = oceanRules;
+        entity.underpopulation = oUnderpopulation;
+        entity.overpopulation = oOverpopulation;
+        entity.reproductionMin = oReproductionMin;
+        entity.reproductionMax = oReproductionMax;
         entity.lifeStyle = oceanLife;
         entity.deathStyle = oceanDeath;
       }
@@ -51,9 +53,8 @@ function createWildOceanSim(rows, cols, pixelSize, roundDelay) {
   let midOceanHeight = oceanHeight + Math.floor(oceanHeight / 2)
   let midOceanWidth = Math.floor(cols / 2);
 
-  let conwaysRules = generateUpdateFunction(2, 3, 3, 3);
-  let oceanRules = generateUpdateFunction(2, 2, 3, 3);
-  let lifeGenRules = generateUpdateFunction(9, 0, 0, 4)
+  let [oUnderpopulation, oOverpopulation, oReproductionMin, oReproductionMax] = [2, 2, 3, 3];
+  let [lgUnderpopulation, lgOverpopulation, lgReproductionMin, lgReproductionMax] = [9, 0, 0, 4];
 
   let [oceanLife, oceanDeath] = randomColorPair();
   let [lifeGenLife, lifeGenDeath] = randomColorPair();
@@ -61,13 +62,19 @@ function createWildOceanSim(rows, cols, pixelSize, roundDelay) {
   sim.grid.forEach((row, i) => {
     row.forEach((entity, j) => {
       if(i > oceanHeight){
-        entity.update = oceanRules;
+        entity.underpopulation = oUnderpopulation;
+        entity.overpopulation = oOverpopulation;
+        entity.reproductionMin = oReproductionMin;
+        entity.reproductionMax = oReproductionMax;
         entity.lifeStyle = oceanLife;
         entity.deathStyle = oceanDeath;
       }
 
       if(i === midOceanHeight || i === sim.grid.length - 1 || (j === midOceanWidth)) {
-        entity.update = lifeGenRules;
+        entity.underpopulation = lgUnderpopulation;
+        entity.overpopulation = lgOverpopulation;
+        entity.reproductionMin = lgReproductionMin;
+        entity.reproductionMax = lgReproductionMax;
         entity.lifeStyle = lifeGenLife;
         entity.deathStyle = lifeGenDeath;
       }

@@ -68,7 +68,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
           entity.deathStyle = deathStyle;
         }
         if (randomRules) {
-          entity.update = generateUpdateFunction(...ruleSets[ruleIndex]);
+          let [underpopulation, overpopulation, reproductionMin, reproductionMax] = ruleSets[ruleIndex];
+          entity.underpopulation = underpopulation;
+          entity.overpopulation = overpopulation;
+          entity.reproductionMin = reproductionMin;
+          entity.reproductionMax = reproductionMax;
         }
       });
     });

@@ -15,9 +15,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   let rows = canvasHeight / pixelSize;
 
   let ruleSets = generateRuleSets();
-  let startingRules = [2, 3, 3, 3];
-  let startingUpdate = generateUpdateFunction(...startingRules);
-  let sim = new Simulation(rows, cols, pixelSize, roundDelay, chanceOfLife, startingUpdate);
+  let sim = new Simulation(rows, cols, pixelSize, roundDelay, chanceOfLife);
 
   sim.canvas.style.height = canvasHeight + 'px';
   sim.canvas.style.width = canvasWidth + 'px';
@@ -26,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   sim.repaint();
   sim.start();
 
+  let startingRules = [2, 3, 3, 3];
   setupEventListeners(sim, ruleSets, startingRules, chanceOfLife);
 });
 
@@ -50,14 +49,14 @@ function setupEventListeners(sim, ruleSets, startingRules, chanceOfLife) {
       parseInt(rulesForm.querySelector('#reproduction-max').value, 10)
     ];
 
-    updateRules(sim, generateUpdateFunction(...rules));
+    updateRules(sim, ...rules);
   });
 
   // Select random rules from the list and apply them.
   document.querySelector('#random-rules-button').addEventListener('click', (e) => {
     let ruleIndex = Math.floor(Math.random() * ruleSets.length);
     let rules = ruleSets[ruleIndex];
-    if(!applyRulesToBox) updateRules(sim, generateUpdateFunction(...rules));
+    if(!applyRulesToBox) updateRules(sim, ...rules);
 
     rulesForm.querySelector('#underpopulation').value = rules[0];
     rulesForm.querySelector('#overpopulation').value = rules[1];
@@ -158,7 +157,7 @@ function setupEventListeners(sim, ruleSets, startingRules, chanceOfLife) {
       parseInt(rulesForm.querySelector('#reproduction-max').value, 10)
     ];
 
-    applyRulesWithin(sim, rowStart, rowStop, colStart, colStop, generateUpdateFunction(...rules))
+    applyRulesWithin(sim, rowStart, rowStop, colStart, colStop, ...rules)
     let [lifeStyle, deathStyle] = randomColorPair();
     applyColorsWithin(sim, rowStart, rowStop, colStart, colStop, lifeStyle, deathStyle)
   });

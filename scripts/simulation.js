@@ -3,14 +3,18 @@ class SimEntity {
     This simple sim entity for conways game of life is alive
     or not alive.
   */
-    constructor(alive = false, lifeStyle = '#000000', deathStyle = '#ADD8E6', update = false) {
+    constructor(alive = false, lifeStyle = '#000000', deathStyle = '#ADD8E6', underpopulation = 2, overpopulation = 3, reproductionMin = 3, reproductionMax = 3) {
     this.alive = alive;
     this.lifeStyle = lifeStyle;
     this.deathStyle = deathStyle;
+    this.underpopulation = underpopulation;
+    this.overpopulation = overpopulation;
+    this.reproductionMin = reproductionMin;
+    this.reproductionMax = reproductionMax;
 
-    // TODO: check for function?
-    if(update !== false) {
-      this.update = update.bind(this);
+    // Reproduction min cannot be more than reproduction max
+    if(this.reproductionMax < this.reproductionMin) {
+      this.reproductionMin = this.reproductionMax
     }
   }
 
@@ -40,17 +44,17 @@ class SimEntity {
       if(n.alive && n !== this) sum++;
     }
 
-    if(alive && sum < 2){
+    if(alive && sum < this.underpopulation){
       alive = false;
     }
-    else if(alive && sum > 3) {
+    else if(alive && sum > this.overpopulation) {
       alive = false;
     }
-    else if(!alive && sum >= 3 && sum <= 3) {
+    else if(!alive && sum >= this.reproductionMin && sum <= this.reproductionMax) {
       alive = true;
     }
 
-    return new SimEntity(alive, this.lifeStyle, this.deathStyle);
+    return new SimEntity(alive, this.lifeStyle, this.deathStyle, this.underpopulation, this.overpopulation, this.reproductionMin, this.reproductionMax);
   }
 
   /*
@@ -75,7 +79,7 @@ class Simulation {
     2D data grid (rows-by-cols) of tities, a canvas element
     and a canvas context.
   */
-  constructor(rows, cols, pixelSize, interRoundDelay, initialChanceOfLife, updateFn = false) {
+  constructor(rows, cols, pixelSize, interRoundDelay, initialChanceOfLife) {
     this.rows = rows;
     this.cols = cols;
     this.pixelSize = pixelSize;
@@ -90,13 +94,7 @@ class Simulation {
       this.grid.push([]);
       for (let j = 0; j < cols; j++) {
         let alive = Math.random() < initialChanceOfLife;
-
-        if(updateFn === false) {
-          this.grid[i].push(new SimEntity(alive));
-        }
-        else {
-          this.grid[i].push(new SimEntity(alive, undefined, undefined, updateFn));
-        }
+        this.grid[i].push(new SimEntity(alive));
       }
     }
 

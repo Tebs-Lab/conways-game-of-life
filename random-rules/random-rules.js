@@ -31,13 +31,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
     let [lifeStyle, deathStyle] = randomColorPair();
     let sim = new Simulation(rows, cols, pixelSize, roundDelay, chanceOfLife)
     let ruleIndex = Math.floor(Math.random() * ruleSets.length);
+    let [underpopulation, overpopulation, reproductionMin, reproductionMax] = ruleSets[ruleIndex];
 
 
     sim.grid.forEach((row) => {
       row.forEach((entity) => {
         entity.lifeStyle = lifeStyle;
         entity.deathStyle = deathStyle;
-        entity.update = generateUpdateFunction(...ruleSets[ruleIndex]);
+        entity.underpopulation = underpopulation;
+        entity.overpopulation = overpopulation;
+        entity.reproductionMin = reproductionMin;
+        entity.reproductionMax = reproductionMax;
       });
     });
 
@@ -51,14 +55,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
     setInterval(() => {
       waitPeriod = (Math.floor(Math.random() * 5000)) + 5000;
       let [lifeStyle, deathStyle] = randomColorPair();
-      let rules = ruleSets[rand(0, ruleSets.length - 1)];
+      let [underpopulation, overpopulation, reproductionMin, reproductionMax] = ruleSets[rand(0, ruleSets.length - 1)];
 
       sim.grid.forEach((row) => {
         row.forEach((entity) => {
           entity.alive = Math.random() > chanceOfLife;
           entity.lifeStyle = lifeStyle;
           entity.deathStyle = deathStyle;
-          entity.update = generateUpdateFunction(...rules);
+          entity.underpopulation = underpopulation;
+          entity.overpopulation = overpopulation;
+          entity.reproductionMin = reproductionMin;
+          entity.reproductionMax = reproductionMax;
         });
       });
     }, waitPeriod);
