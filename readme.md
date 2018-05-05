@@ -28,8 +28,18 @@ Taking three by three to the limit, [random rules](https://tebs-game-of-life.com
 
 ### Wild Ocean
 
-[Wild Ocean](https://tebs-game-of-life.com/wild-ocean/wild-ocean.html) is a mode that builds on the modifications of rainbow, but adds several different zones with different rules. In some places reproduction can happen without any neighbors; in some places life is harsh, and it's hard to survive.
+[Wild Ocean](https://tebs-game-of-life.com/wild-ocean/wild-ocean.html) is a mode that builds on the modifications of rainbow, but adds several different zones with different rules. In some places reproduction can happen without any neighbors; in some places life is harsh, and it's hard to survive; but the two largest zones are still standard Conway's.
+
+### Creeping Ivy
+
+[Creeping Ivy](https://tebs-game-of-life.com/creeping-ivy/ccreeping-ivy.html) has 6 boxes of standard Conway's Game Of Life are enclosed in rows and columns with the death-by-crowding rate bumped up to 5, instead of the regular 3. The result reminds me of a spreading disease, or creeping vines.
 
 ### Conway's Editor
 
 A fun tool to experiment with numerous different rules, configurations, and tools for creating your own version of Conway's Game of Life. Of special interest is the "toggle rule box" mode -- when in this mode highlighting a section of the grid will set the rules for only the highlighted areas. This tool is how I found the inspiration for simulations like Rainbow and Wild Ocean.
+
+In standard mode, users can fiddle with the rules, and click "update rules" to apply the current selection to the board. Users can also click random rules to automatically generate a random set of rules and apply them to the board.
+
+When in toggle rule box mode, selecting random rules will only change the numbers in the input boxes, rather than automatically applying that ruleset to the whole board.
+
+As in many of the single grid modes, you can pause by pressing the z key while the canvas element has focus.
