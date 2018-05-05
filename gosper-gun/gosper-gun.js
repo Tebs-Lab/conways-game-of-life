@@ -2,7 +2,7 @@
 document.addEventListener("DOMContentLoaded", function(event) {
   let pixelSize = 8;
   let roundDelay = 100;
-  let chanceOfLife = .2
+  let chanceOfLife = 0;
 
   let container = document.getElementById('container');
   let containerWidth = window.innerWidth * .98;
@@ -12,8 +12,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
   container.style.height = containerHeight + 'px';
   container.style.width = containerWidth + 'px';
 
-  let sim = createOceanSim(rows, cols, pixelSize, roundDelay, chanceOfLife);
+  let sim = new Simulation(rows, cols, pixelSize, roundDelay, chanceOfLife);
   container.append(sim.canvas);
+  createGGG(sim, 1, 1);
   setRainbowScheme(sim);
 
   sim.start();

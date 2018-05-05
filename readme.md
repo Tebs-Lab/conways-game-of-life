@@ -22,17 +22,9 @@ Currently, rule box mode only works on PCs, not on phones.
 
 The [single large grid](https://tebs-game-of-life.com/single-large/single-large.html) mode takes the full page, and can be started and stopped by clicking the button at the bottom of the page or by pressing the z key when the focus is on the canvas element. You can click anywhere to add life. Life is seeded randomly, with a 10% chance of any cell staring alive.
 
-### Three By Three
+### Gosper Glider Gun
 
-[Three by three](https://tebs-game-of-life.com/three-by-three/three-by-three.html) is an Andy Warhol inspired version of Conway's game of life.
-
-### Random Rules
-
-Taking three by three to the limit, [random rules](https://tebs-game-of-life.com/random-rules/random-rules.html) creates 16 grids, each with randomly chosen color schemes and randomly chosen rules. The rules and color schemes automatically update themselves every 5-10 seconds.
-
-### Grid Maker
-
-[Grid maker](https://tebs-game-of-life.com/grid-maker/grid-maker-form.html) is the logical conclusion of three by three and random rules. Using a web-form you can customize the grid, pixel size, animation speed, and control if the rules and colors are randomized or not.
+The [Gosper Glider Gun](https://tebs-game-of-life.com/single-large/single-large.html) was the first shape found that will generate an infinite number of living cells. It does this by constantly emitting gliders. This finding was key to the ultimate proof that Conway's Game of Life can be used to create a Turing machine.
 
 ### Rainbow
 
@@ -49,3 +41,15 @@ Taking three by three to the limit, [random rules](https://tebs-game-of-life.com
 ### Gliderville
 
 [Gliderville](https://tebs-game-of-life.com/gliderville/gliderville.html) randomly spawns a series of gliders in a world with a heart of ivy. When a glider crashes into the central box, the center begins to fill. Highly satisfying.
+
+### Three By Three
+
+[Three by three](https://tebs-game-of-life.com/three-by-three/three-by-three.html) is an Andy Warhol inspired version of Conway's game of life.
+
+### Random Rules
+
+Taking three by three to the limit, [random rules](https://tebs-game-of-life.com/random-rules/random-rules.html) creates 16 grids, each with randomly chosen color schemes and randomly chosen rules. The rules and color schemes automatically update themselves every 5-10 seconds.
+
+### Grid Maker
+
+[Grid maker](https://tebs-game-of-life.com/grid-maker/grid-maker-form.html) is the logical conclusion of three by three and random rules. Using a web-form you can customize the grid, pixel size, animation speed, and control if the rules and colors are randomized or not.
