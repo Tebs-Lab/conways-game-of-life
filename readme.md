@@ -20,7 +20,7 @@ Currently, rule box mode only works on PCs, not on phones.
 
 ### Single Large Grid Mode
 
-The (single large grid)[https://tebs-game-of-life.com/single-large/single-large.html] mode takes the full page, and can be started and stopped by clicking the button at the bottom of the page or by pressing the z key when the focus is on the canvas element. You can click anywhere to add life. Life is seeded randomly, with a 10% chance of any cell staring alive.
+The [single large grid](https://tebs-game-of-life.com/single-large/single-large.html) mode takes the full page, and can be started and stopped by clicking the button at the bottom of the page or by pressing the z key when the focus is on the canvas element. You can click anywhere to add life. Life is seeded randomly, with a 10% chance of any cell staring alive.
 
 ### Three By Three
 
@@ -44,7 +44,7 @@ Taking three by three to the limit, [random rules](https://tebs-game-of-life.com
 
 ### Creeping Ivy
 
-[Creeping Ivy](https://tebs-game-of-life.com/creeping-ivy/ccreeping-ivy.html) has 6 boxes of standard Conway's Game Of Life are enclosed in rows and columns with the death-by-crowding rate bumped up to 5, instead of the regular 3. The result reminds me of a spreading disease, or creeping vines.
+[Creeping Ivy](https://tebs-game-of-life.com/creeping-ivy/creeping-ivy.html) has 6 boxes of standard Conway's Game Of Life are enclosed in rows and columns with the death-by-crowding rate bumped up to 5, instead of the regular 3. The result reminds me of a spreading disease, or creeping vines.
 
 ### Gliderville
 
