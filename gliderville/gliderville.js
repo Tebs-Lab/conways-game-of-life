@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     if(sim.intervalId && e.which === 90) {
       sim.stop();
     }
-    else {
+    else if(e.which === 90) {
       sim.start();
     }
   });
