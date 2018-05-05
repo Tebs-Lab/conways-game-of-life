@@ -46,6 +46,9 @@ function setRainbowSchemeWithin(sim, startRow, stopRow, startCol, stopCol) {
   }
 }
 
+/*
+  Create the "wild ocean" shape.
+*/
 function createWildOceanSim(rows, cols, pixelSize, roundDelay) {
   let sim = new Simulation(rows, cols, pixelSize, roundDelay, 0);
 
@@ -81,5 +84,42 @@ function createWildOceanSim(rows, cols, pixelSize, roundDelay) {
     });
   });
 
+  return sim;
+}
+
+/*
+  Create the "creeping ivy" shape.
+*/
+function createCreepyIvySim(rows, cols, pixelSize, roundDelay) {
+  let sim = new Simulation(rows, cols, pixelSize, roundDelay, 0);
+
+  let barThickness = Math.ceil(rows / 7);
+  let columnThinkness = Math.ceil(cols / 5);
+  let [ivyUnderpopulation, ivyOverpopulation, ivyReproductionMin, ivyReproductionMax] = [2, 5, 3, 3];
+  let [ivyLife, ivyDeath] = randomColorPair();
+  let [regLife, regDeath] = randomColorPair();
+
+  let doingIvyRow = false;
+  sim.grid.forEach((row, i) => {
+    if(i % barThickness == 0) doingIvyRow = !doingIvyRow;
+    let doingIvyCol = false; // First mod flips this...
+
+    row.forEach((entity, j) => {
+      if(j % columnThinkness == 0) doingIvyCol = !doingIvyCol;
+      if(doingIvyRow || doingIvyCol){
+        entity.underpopulation = ivyUnderpopulation;
+        entity.overpopulation = ivyOverpopulation;
+        entity.reproductionMin = ivyReproductionMin;
+        entity.reproductionMax = ivyReproductionMax;
+        entity.lifeStyle = ivyLife;
+        entity.deathStyle = ivyDeath;
+      }
+      else {
+        entity.alive = Math.random() < .2;
+        entity.lifeStyle = regLife;
+        entity.deathStyle = regDeath;
+      }
+    });
+  });
   return sim;
 }
