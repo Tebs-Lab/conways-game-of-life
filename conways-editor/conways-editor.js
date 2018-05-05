@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
   sim.canvas.style.height = canvasHeight + 'px';
   sim.canvas.style.width = canvasWidth + 'px';
   container.append(sim.canvas);
-  sim.advanceRound();
   sim.repaint();
   sim.start();
 

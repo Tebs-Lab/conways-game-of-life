@@ -248,12 +248,3 @@ class Simulation {
     });
   }
 }
-
-/*
-  This helper function makes binding the listeners cleaner
-*/
-function bindMultipleEventListener(element, eventNames, f) {
-  eventNames.forEach((eventName) => {
-    element.addEventListener(eventName, f);
-  });
-}
