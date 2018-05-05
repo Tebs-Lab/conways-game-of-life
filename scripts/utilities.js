@@ -79,6 +79,19 @@ function resetLife(sim, chanceOfLife = .1) {
 }
 
 /*
+  Given a bounding box, apply the currently selected rules to ONLY the
+  pixels within the provided box.
+*/
+function resetLifeWithin(sim, rowStart, rowStop, colStart, colStop, chanceOfLife = .1) {
+  for(let i = rowStart; i < rowStop; i++) {
+    for(let j = colStart; j < colStop; j++) {
+      let entity = sim.grid[i][j];
+      entity.alive = Math.random() < chanceOfLife;
+    }
+  }
+}
+
+/*
   Update the rules for all the pixels
 */
 function updateRules(sim, underpopulation, overpopulation, reproductionMin, reproductionMax) {

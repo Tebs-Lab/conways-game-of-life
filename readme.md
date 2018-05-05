@@ -6,6 +6,18 @@ Much has already been written about the [game of life](https://en.wikipedia.org/
 
 There are currently a number of simulations/applications, each with different rules and behaviors. In all modes you can click on the grid to add life, and in most of the modes (esp. modes with one grid) you can pause the simulation by pressing z.
 
+### Conway's Editor
+
+A fun tool to experiment with numerous different rules, configurations, and tools for creating your own version of Conway's Game of Life. Of special interest is the "toggle rule box" mode -- when in this mode highlighting a section of the grid will set the rules for only the highlighted areas. This tool is how I found the inspiration for simulations like Rainbow and Wild Ocean.
+
+In standard mode, users can fiddle with the rules, and click "update rules" to apply the current selection to the board. Users can also click random rules to automatically generate a random set of rules and apply them to the board.
+
+When in toggle rule box mode, selecting random rules will only change the numbers in the input boxes, rather than automatically applying that ruleset to the whole board.
+
+As in many of the single grid modes, you can pause by pressing the z key while the canvas element has focus.
+
+Currently, rule box mode only works on PCs, not on phones.
+
 ### Single Large Grid Mode
 
 The (single large grid)[https://tebs-game-of-life.com/single-large/single-large.html] mode takes the full page, and can be started and stopped by clicking the button at the bottom of the page or by pressing the z key when the focus is on the canvas element. You can click anywhere to add life. Life is seeded randomly, with a 10% chance of any cell staring alive.
@@ -34,12 +46,6 @@ Taking three by three to the limit, [random rules](https://tebs-game-of-life.com
 
 [Creeping Ivy](https://tebs-game-of-life.com/creeping-ivy/ccreeping-ivy.html) has 6 boxes of standard Conway's Game Of Life are enclosed in rows and columns with the death-by-crowding rate bumped up to 5, instead of the regular 3. The result reminds me of a spreading disease, or creeping vines.
 
-### Conway's Editor
+### Gliderville
 
-A fun tool to experiment with numerous different rules, configurations, and tools for creating your own version of Conway's Game of Life. Of special interest is the "toggle rule box" mode -- when in this mode highlighting a section of the grid will set the rules for only the highlighted areas. This tool is how I found the inspiration for simulations like Rainbow and Wild Ocean.
-
-In standard mode, users can fiddle with the rules, and click "update rules" to apply the current selection to the board. Users can also click random rules to automatically generate a random set of rules and apply them to the board.
-
-When in toggle rule box mode, selecting random rules will only change the numbers in the input boxes, rather than automatically applying that ruleset to the whole board.
-
-As in many of the single grid modes, you can pause by pressing the z key while the canvas element has focus.
+[Gliderville](https://tebs-game-of-life.com/gliderville/gliderville.html) randomly spawns a series of gliders in a world with a heart of ivy. When a glider crashes into the central box, the center begins to fill. Highly satisfying.
