@@ -29,24 +29,6 @@ function createOceanSim(rows, cols, pixelSize, roundDelay) {
 }
 
 /*
-  Make everything rainbow colored dawwg.
-*/
-function setRainbowSchemeWithin(sim, startRow, stopRow, startCol, stopCol) {
-  let rows = stopRow - startRow;
-  let cols = stopCol - startCol;
-  let diagonalLength = Math.sqrt((rows * rows) + (cols * cols)); //rows^2 + cols^2
-  let hueIncrement = 360 / diagonalLength;
-  console.log(startRow, stopRow, startCol, stopCol);
-  for(let i = startRow; i < stopRow; i++) {
-    for(let j = startCol; j < stopCol; j++) {
-      let h = Math.floor(Math.sqrt((i * i) + (j * j)) * hueIncrement);
-      sim.grid[i][j].lifeStyle = `hsl(${h}, 100%, 60%)`;
-      sim.grid[i][j].deathStyle = '#000000';
-    }
-  }
-}
-
-/*
   Create the "wild ocean" shape.
 */
 function createWildOceanSim(rows, cols, pixelSize, roundDelay) {
@@ -121,5 +103,46 @@ function createCreepyIvySim(rows, cols, pixelSize, roundDelay) {
       }
     });
   });
+  return sim;
+}
+
+function createGridLockSim(rows, cols, pixelSize, roundDelay, chanceOfLife = .01, squareSize = 20) {
+  let sim = new Simulation(rows, cols, pixelSize, roundDelay, chanceOfLife);
+  let squaresPerRow = Math.floor(cols / squareSize);
+  let [aLife, aDeath] = randomColorPair();
+  let [bLife, bDeath] = randomColorPair();
+
+  // yuck...
+  let gridLock = true;
+  for(let r = 0; r < rows; r += squareSize) {
+    // If there are an odd number of rows this is required to keep the checker pattern
+    if(squaresPerRow & 1 === 1) gridLock = !gridLock;
+    for(let c = 0; c < cols; c += squareSize) {
+      gridLock = !gridLock;
+        for(let i = 0; i < squareSize; i++) {
+          for(let j = 0; j < squareSize; j++) {
+            if(r + i > rows || c + j > cols) continue;
+            let entity = sim.grid[r + i][c + j];
+            if(entity && gridLock) {
+              entity.underpopulation = 2;
+              entity.overpopulation = 4;
+              entity.reproductionMin = 2;
+              entity.reproductionMax = 2;
+              entity.lifeStyle = aLife;
+              entity.deathStyle = aDeath;
+            }
+            else if(entity && !gridLock) {
+              entity.underpopulation = 1;
+              entity.overpopulation = 4;
+              entity.reproductionMin = 3;
+              entity.reproductionMax = 3;
+              entity.lifeStyle = bLife;
+              entity.deathStyle = bDeath;
+          }
+        }
+      }
+    }
+  }
+
   return sim;
 }

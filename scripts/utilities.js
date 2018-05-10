@@ -17,6 +17,24 @@ function setRainbowScheme(sim) {
 }
 
 /*
+  Make everything rainbow colored dawwg.
+*/
+function setRainbowSchemeWithin(sim, startRow, stopRow, startCol, stopCol) {
+  let rows = stopRow - startRow;
+  let cols = stopCol - startCol;
+  let diagonalLength = Math.sqrt((rows * rows) + (cols * cols)); //rows^2 + cols^2
+  let hueIncrement = 360 / diagonalLength;
+  console.log(startRow, stopRow, startCol, stopCol);
+  for(let i = startRow; i < stopRow; i++) {
+    for(let j = startCol; j < stopCol; j++) {
+      let h = Math.floor(Math.sqrt((i * i) + (j * j)) * hueIncrement);
+      sim.grid[i][j].lifeStyle = `hsl(${h}, 100%, 60%)`;
+      sim.grid[i][j].deathStyle = '#000000';
+    }
+  }
+}
+
+/*
   set colors to the provided parameters
 */
 function resetColors(sim, lifeStyle, deathStyle) {
