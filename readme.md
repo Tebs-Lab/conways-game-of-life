@@ -1,6 +1,6 @@
 # Conways Game Of Life
 
-Much has already been written about the [game of life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) so I won't describe it here. I was inspired to play around with the game, and have created this browser based implementation of the game, along with some fun modifications. You can get right down to business, and play around with all the modifications [here](https://tebs-game-of-life.com).
+I've written a lot about the [Game of Life](https://medium.com/@TebbaVonMathenstien/simple-rules-emergent-beauty-and-life-artificial-and-otherwise-208642d6d81c) on Medium, so for more background on the game's history, head there. I was inspired to play around with the game, and have created this browser based implementation of the game, along with some fun modifications. You can get right down to business, and play around with all the modifications [here](https://tebs-game-of-life.com).
 
 ## Mods & Documentation
 
