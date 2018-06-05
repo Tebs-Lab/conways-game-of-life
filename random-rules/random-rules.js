@@ -2,7 +2,7 @@
 document.addEventListener("DOMContentLoaded", function(event) {
   let pixelSize = 8;
   let roundDelay = 150;
-  let chanceOfLife = .2;
+  let chanceOfLife = .4;
   let simRows = 4;
   let simCols = 4;
   let numberOfSims = simRows * simCols;
@@ -68,6 +68,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
           entity.reproductionMax = reproductionMax;
         });
       });
+      sim.repaint();
     }, waitPeriod);
   }
 });

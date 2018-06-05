@@ -8,26 +8,73 @@
   </head>
   <body>
     <h1>Teb's Conway's Game of Life</h1>
-    <p><a href="https://tebs-lab.com">Visit Teb's Lab</a></p>
-    <p>Conway’s Game of Life is a classic. Invented by John Conway in 1970, the “zero player game” is a wonderful example of emergent behavior. Although each cell follows the same simple rules, wonderful patterns emerge. As time went on, the Game was shown to be Turing Complete, meaning any program could be represented as an initial state to Conway’s Game of Life given a large enough grid. That’s incredible!</p>
+    <p>Conway’s Game of Life is a classic. Invented by John Conway in 1970, the “zero player game” is a wonderful example of emergent behavior. Although each cell follows the same simple rules, wonderful patterns emerge. As time went on, the Game was shown to be Turing Complete, meaning any program could be represented as an initial state to Conway’s Game of Life given a large enough grid. That’s incredible! </p>
 
-    <p>I made the original, then I had fun playing with the rules, making “Conway’s Editor”, and exploring the world of “Cellular Automata”. I hope you enjoy it. <a href="https://github.com/tebba-von-mathenstein/conways-game-of-life">Get the code on Github.</a></li>
-</p>
+    <p><a href="https://medium.com/@TebbaVonMathenstien/simple-rules-emergent-beauty-and-life-artificial-and-otherwise-208642d6d81c">Read more about Conway's Game of Life on Medium</a> or <a href="https://github.com/tebba-von-mathenstein/conways-game-of-life">Get the code on Github.</a></p>
+    <p>If you want to see more of my projects, <a href="https://tebs-lab.com">visit Teb's Lab.</a> Finally, if you enjoyed this project, please consider joining <a href="https://www.patreon.com/tebsLab">Teb's Lab on Patreon</a> or click the piggy bank to buy me a cup of coffee.</p>
 
+    <a href="https://digitaltipjar.com/tebslab?_external=true" class="dtj-tip-button" data-username="tebslab">
+      Digital Tip Jar
+    </a>
+    <script>
+      var a = document.querySelectorAll('.dtj-tip-button')[0];
+      var i = document.createElement('IFRAME');
+      i.setAttribute('src', "https://digitaltipjar.com/tebslab/widgets/tip?_external=true");
+      i.setAttribute('frameborder','0');
+      i.style.height = 70 +'px';
+      i.style.width = 120 +'px';
+      a.parentNode.insertBefore(i,a);
+      a.parentNode.removeChild(a);
+    </script>
+    <hr>
+    <h3>Game Modes</h3>
 
-    <p>Game Modes</p>
+    In all of these simulations clicking, swiping, and clicking/dragging will add life to the simulation. In all the pages with a single simulation, pressing z will pause and play the simulation.
+
     <ul>
-      <li><a href="single-large/single-large.html">One Large Grid</a></li>
-      <li><a href="conways-editor/conways-editor.html">Conways Editor</a></li>
-      <li><a href="gosper-gun/gosper-gun.html">Gosper Glider Gun</a></li>
-      <li><a href="rainbow/rainbow.html">Rainbow</a></li>
-      <li><a href="wild-ocean/wild-ocean.html">Wild Ocean</a></li>
-      <li><a href="creeping-ivy/creeping-ivy.html">Creeping Ivy</a></li>
-      <li><a href="gliderville/gliderville.html">Gliderville</a></li>
-      <li><a href="checkers/checkers.html">Checker Board</a></li>
-      <li><a href="three-by-three/three-by-three.html">Three By Three</a></li>
-      <li><a href="random-rules/random-rules.html">Random Rules</a></li>
-      <li><a href="grid-maker/grid-maker-form.html">Custom Grid</a></li>
+      <li><a href="single-large/single-large.html">One Large Grid: <img src="/images/single-grid.png" alt="a picture of the single grid world"></img></a>
+        <p>A simple, single instance of Conways game. Click and drag to add life.</p>
+      </li>
+      <hr>
+      <li><a href="conways-editor/conways-editor.html">Conways Editor: <img src="/images/conways-editor.png" alt="a picture of conways editor"></img></a>
+        <p>A grid of Conway's with tools to configure and customize the rules of the game, and the display colors. You can also use "rule box mode" to add internal simulations; areas of the grid that follow their own rules.</p>
+      </li>
+      <hr>
+      <li><a href="gosper-gun/gosper-gun.html">Gosper Glider Gun: <img src="/images/gosper-gun.png" alt="a picture of the gosper gun"></img></a>
+        <p>The infinite sequence that started it all, in a satisfying rainbow color scheme.</p>
+      </li>
+      <hr>
+      <li><a href="rainbow/rainbow.html">Rainbow: <img src="/images/rainbow.png" alt="a picture of the rainbow world"></img></a>
+        <p>The bottom quarter of this simulation is a little less survivable than the rest, which is regular Conway's. A single horizontal bar of life is drawn somewhere in that harsh environment, the result is a mesmerizing visualization that is a little different every time, and on every sceen size.</p>
+      </li>
+      <hr>
+      <li><a href="wild-ocean/wild-ocean.html">Wild Ocean: <img src="/images/wild-ocean.png" alt="a picture of the wild wild ocean"></img></a>
+        <p>An experiment with many kinds of rules, building on top of the Rainbow simulation. Can you identify each of the zones and their rules?</p>
+      </li>
+      <hr>
+      <li><a href="creeping-ivy/creeping-ivy.html">Creeping Ivy: <img src="/images/creeping-ivy.png" alt="a picture of the creeping ivy world"></img></a>
+        <p>With a randomized color scheme, this simulation draws 6 boxes of regular Conway's inside of an area with a kind of highly resilient life. The result reminds me of vines slowly engulfing a building with windows.</p>
+      </li>
+      <hr>
+      <li><a href="gliderville/gliderville.html">Gliderville: <img src="/images/gliderville.png" alt="a picture of gliderville"></img></a>
+        <p>With an "Ivy Box" in the middle of the sceen, this simulation randomly spawns a bunch of "gliders". Eventually, one crashes into the "ivy box" which will then fill with life.</p>
+      </li>
+      <hr>
+      <li><a href="checkers/checkers.html">Checker Board: <img src="/images/checker-board.png" alt="a picture of the checkboard world"></img></a>
+        <p>Two kinds of life (both small modifications of the Creeping Ivy) with different color schemes arranged in a checker board pattern. I love the way this simulation looks. Click on a square to kill all life in that square.</p>
+      </li>
+      <hr>
+      <li><a href="three-by-three/three-by-three.html">Three By Three: <img src="/images/warhol.png" alt="a picture of the 3 by 3 grid"></img></a>
+        <p>I call this "The Warhol". A three by three grid with random colors each playing the standard Conway's Game of Life. </p>
+      </li>
+      <hr>
+      <li><a href="random-rules/random-rules.html">Random Rules: <img src="/images/random-rules.png" alt="a picture of the random rules grid"></img></a>
+        <p>AKA Channel Surfing. This simulation puts 16 simulations on the screen, each with randomly chosen rules. Every 5-10 seconds each simulation has it's rules and colors updated. Epilepsy warning: This simulation has lots of bright flashing lights.</p>
+      </li>
+      <hr>
+      <li><a href="grid-maker/grid-maker-form.html">Custom Grid: <img src="/images/grid-maker.png" alt="a picture of the grid maker"></img></a>
+        <p>A webform that you can use to make grids like Three by Three and Random Rules, or single simulations with different parameters for pixel size and refresh speed.</p>
+      </li>
     </ul>
   </body>
 </html>

@@ -1,17 +1,21 @@
 html {
   box-sizing: border-box;
   background-color: #252a34;
-  font-size: 20px;
+  font-size: 1em;
 }
+
 body {
-  display: grid;
-  justify-content: center;
-  align-content: center;
+  padding: 20px;
   margin: auto;
   max-width: 600px;
   color: #eaeaea;
   font-family: -apple-system,BlinkMacSystemFont,"Roboto","Segoe UI","Helvetica Neue","Lucida Grande",Arial,sans-serif;
   line-height: 1.5;
+}
+
+hr {
+  border-bottom: 1px solid #51555d;
+  width: 100%;
 }
 
 h1 {
@@ -21,4 +25,20 @@ h1 {
 
 a {
     color: #8cd2d5;
+}
+
+img {
+  max-width: 70%;
+  max-height: 200px;
+  display: block;
+}
+
+li {
+  display: grid;
+  grid-template-rows: 50% 50%;
+  margin-bottom: 1em;
+}
+
+li a {
+  font-size: 1.5em;
 }
