@@ -49,7 +49,7 @@ function resetColors(sim, lifeStyle, deathStyle) {
 /*
   Give the board random complementary colors
 */
-function randomColors(sim) {
+function setRandomColors(sim) {
   let [lifeStyle, deathStyle] = randomColorPair(sim);
   sim.grid.forEach((row) => {
     row.forEach((entity) => {
