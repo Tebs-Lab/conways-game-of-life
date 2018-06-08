@@ -1,13 +1,3 @@
 body {
   background-color: #000000;
 }
-
-#container {
-  display: grid;
-  margin: auto;
-}
-
-canvas {
-  margin: 2px;
-  border: 2px solid black;
-}

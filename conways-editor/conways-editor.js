@@ -78,7 +78,7 @@ function setupEventListeners(sim, ruleSets, startingRules, chanceOfLife) {
 
   // Pick a random color scheme
   document.querySelector('#random-color-button').addEventListener('click', (e) => {
-    randomColors(sim);
+    setRandomColorssim);
   });
 
   // Pause/Play

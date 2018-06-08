@@ -1,27 +1,40 @@
 body {
-  background-color: #cccccc;
+  max-width: none!important;
+}
+
+.container {
+  margin: auto;
+    display: grid;
+    grid-template-columns: 50% 30%;
+    max-width: 80%;
 }
 
 form {
   display: grid;
-  width: 33%;
+  width: 50%;
   margin: auto;
   grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 2;
 }
 
 input[type=number] {
   margin: 5px;
   padding: 3px;
+  border-radius: 3px;
 }
 
-button, label {
+label, input[type=submit] {
   font-weight: bold;
-  border: 3px solid #888888;
+  font-size: 1em;
   margin-bottom: 2px;
   font-weight: normal;
   text-align: center;
   cursor: pointer;
   border-radius: 4px;
-  background: #eeeeee;
-  color: #000000;
+}
+
+textarea {
+  margin: 20px;
+  border-radius: 20px;
+  padding: 10px;
 }
