@@ -39,6 +39,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   container.style.width = containerWidth + 'px';
   container.style.gridTemplateColumns = `repeat(${simCols}, 1fr)`;
   container.style.gridTemplateRows = `repeat(${simRows}, 1fr)`;
+  container.style.display = `grid`;
 
   const RULE_SETS = generateRuleSets();
 
