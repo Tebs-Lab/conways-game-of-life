@@ -14,6 +14,8 @@ class SimEntity {
 
     // Experimental improvement...
     this.neighbors = [];
+    this.nextState = null;
+    this.previousState = null;
 
     // Reproduction min cannot be more than reproduction max
     if(this.reproductionMax < this.reproductionMin) {
@@ -41,30 +43,32 @@ class SimEntity {
   */
   prepareUpdate() {
     let sum = 0;
-    let alive = this.alive;
+    let nextState = this.alive;
 
     for(let n of this.neighbors){
       if(n.alive && n !== this) sum++;
     }
 
-    if(alive && sum < this.underpopulation){
-      alive = false;
+    if(nextState && sum < this.underpopulation){
+      nextState = false;
     }
-    else if(alive && sum > this.overpopulation) {
-      alive = false;
+    else if(nextState && sum > this.overpopulation) {
+      nextState = false;
     }
-    else if(!alive && sum >= this.reproductionMin && sum <= this.reproductionMax) {
-      alive = true;
+    else if(!nextState && sum >= this.reproductionMin && sum <= this.reproductionMax) {
+      nextState = true;
     }
 
-    this.nextState = alive;
+    this.nextState = nextState;
   }
 
   /*
     Advance this pixel to it's nextState.
   */
   update() {
+    this.previousState = this.alive;
     this.alive = this.nextState;
+    this.nextState = null;
   }
 
   /*
@@ -189,9 +193,10 @@ class Simulation {
   }
 
   /*
-    Repaint the grid; loop through each entity in the grid to paint.
+    Optimized repaint that only updates pixels that have changed, and paints
+    in batches by color.
   */
-  repaint(force = false) {
+  repaintMinimal(force = false) {
     if(this.mouseIsDown && !force) return;
 
     // Canvas optimization -- it's faster to paint by color than placement.
@@ -199,6 +204,11 @@ class Simulation {
     for(let i = 0; i < this.rows; i++) {
       for(let j = 0; j < this.cols; j++) {
         let pixel = this.grid[i][j];
+
+        if(pixel.alive === pixel.previousState){
+          continue; // No need to repaint if the pixel didn't change
+        }
+
         let color = pixel.alive ? pixel.lifeStyle : pixel.deathStyle;
 
         if(byColor[color] === undefined) {
