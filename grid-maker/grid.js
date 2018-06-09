@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     simRows,
     simCols,
     randomRules,
+    rainbowMode,
     randomColors,
     autoRefresh
   } = searchObj;
@@ -20,8 +21,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
   simRows = parseInt(simRows, 10) || 4;
   simCols = parseInt(simCols, 10) || 4;
   randomRules = randomRules === "on";
+  rainbowMode = rainbowMode === "on";
   randomColors = randomColors === "on";
-  autoRefresh = autoRefresh || false;
+  autoRefresh = autoRefresh === "on";
   if(isNaN(parseFloat(chanceOfLife))) {
     chanceOfLife = .1;
   }
@@ -65,8 +67,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
       updateRules(sim, ...RULE_SETS[ruleIndex]);
     }
 
-    if(randomColors) {
-      if(Math.random() < .01) {
+    if(randomColors || rainbowMode) {
+      if(Math.random() < .01 || rainbowMode) {
         setRainbowScheme(sim);
       } else {
         setRandomColors(sim);
