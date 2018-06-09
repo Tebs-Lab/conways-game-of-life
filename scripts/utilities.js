@@ -1,35 +1,42 @@
 
 /*
-  Make everything rainbow colored dawwg.
+  Give each entity in the grid an alive style such that when all pixels are alive
+  the grid would be a rainbow gradient.
 */
 function setRainbowScheme(sim) {
   let rows = sim.grid.length;
   let cols = sim.grid[0].length;
   let diagonalLength = Math.sqrt((rows * rows) + (cols * cols)); //rows^2 + cols^2
   let hueIncrement = 360 / diagonalLength;
+
   for(let i = 0; i < rows; i++) {
     for(let j = 0; j < cols; j++) {
       let h = Math.floor(Math.sqrt((i * i) + (j * j)) * hueIncrement);
-      sim.grid[i][j].lifeStyle = `hsl(${h}, 100%, 60%)`;
-      sim.grid[i][j].deathStyle = `#000000`;
+      let px = sim.grid[i][j];
+      px.lifeStyle = `hsl(${h}, 100%, 60%)`;
+      px.deathStyle = `#000000`;
+      px.forceRepaint = true;
     }
   }
 }
 
 /*
-  Make everything rainbow colored dawwg.
+  Give each entity in the specified area of the grid an alive style
+  such that when all pixels are alive the area would be a rainbow gradient.
 */
 function setRainbowSchemeWithin(sim, startRow, stopRow, startCol, stopCol) {
   let rows = stopRow - startRow;
   let cols = stopCol - startCol;
   let diagonalLength = Math.sqrt((rows * rows) + (cols * cols)); //rows^2 + cols^2
   let hueIncrement = 360 / diagonalLength;
-  console.log(startRow, stopRow, startCol, stopCol);
+
   for(let i = startRow; i < stopRow; i++) {
     for(let j = startCol; j < stopCol; j++) {
       let h = Math.floor(Math.sqrt((i * i) + (j * j)) * hueIncrement);
-      sim.grid[i][j].lifeStyle = `hsl(${h}, 100%, 60%)`;
-      sim.grid[i][j].deathStyle = '#000000';
+      let px = sim.grid[i][j];
+      px.lifeStyle = `hsl(${h}, 100%, 60%)`;
+      px.deathStyle = `#000000`;
+      px.forceRepaint = true;
     }
   }
 }
@@ -42,6 +49,7 @@ function resetColors(sim, lifeStyle, deathStyle) {
     row.forEach((entity) => {
       entity.lifeStyle = lifeStyle;
       entity.deathStyle = deathStyle;
+      entity.forceRepaint = true;
     });
   });
 }
@@ -55,6 +63,7 @@ function setRandomColors(sim) {
     row.forEach((entity) => {
       entity.lifeStyle = lifeStyle;
       entity.deathStyle = deathStyle;
+      entity.forceRepaint = true;
     });
   });
 }
@@ -66,8 +75,10 @@ function setRandomColors(sim) {
 function applyColorsWithin(sim, rowStart, rowStop, colStart, colStop, lifeStyle, deathStyle) {
   for(let i = rowStart; i < rowStop; i++) {
     for(let j = colStart; j < colStop; j++) {
-      sim.grid[i][j].lifeStyle = lifeStyle;
-      sim.grid[i][j].deathStyle = deathStyle;
+      let entity = sim.grid[i][j];
+      entity.lifeStyle = lifeStyle;
+      entity.deathStyle = deathStyle;
+      entity.forceRepaint = true;
     }
   }
 }
@@ -91,9 +102,12 @@ function randomColorPair() {
 function resetLife(sim, chanceOfLife = .1) {
   sim.grid.forEach((row) => {
     row.forEach((entity) => {
+      entity.previousState = entity.alive;
       entity.alive = Math.random() < chanceOfLife;
     });
   });
+
+  sim.repaint();
 }
 
 /*
@@ -104,9 +118,14 @@ function resetLifeWithin(sim, rowStart, rowStop, colStart, colStop, chanceOfLife
   for(let i = rowStart; i < rowStop; i++) {
     for(let j = colStart; j < colStop; j++) {
       let entity = sim.grid[i][j];
-      entity.alive = Math.random() < chanceOfLife;
+      if(entity) {
+        entity.previousState = entity.alive;
+        entity.alive = Math.random() < chanceOfLife;
+      }
     }
   }
+
+  sim.repaint();
 }
 
 /*

@@ -16,6 +16,7 @@ class SimEntity {
     this.neighbors = [];
     this.nextState = null;
     this.previousState = null;
+    this.forceRepaint = true;
 
     // Reproduction min cannot be more than reproduction max
     if(this.reproductionMax < this.reproductionMin) {
@@ -196,7 +197,7 @@ class Simulation {
     Optimized repaint that only updates pixels that have changed, and paints
     in batches by color.
   */
-  repaintMinimal(force = false) {
+  repaint(force = false) {
     if(this.mouseIsDown && !force) return;
 
     // Canvas optimization -- it's faster to paint by color than placement.
@@ -205,17 +206,17 @@ class Simulation {
       for(let j = 0; j < this.cols; j++) {
         let pixel = this.grid[i][j];
 
-        if(pixel.alive === pixel.previousState){
+        if(!pixel.forceRepaint && pixel.alive === pixel.previousState){
           continue; // No need to repaint if the pixel didn't change
         }
 
         let color = pixel.alive ? pixel.lifeStyle : pixel.deathStyle;
-
         if(byColor[color] === undefined) {
           byColor[color] = []
         }
 
         byColor[color].push([i, j]);
+        pixel.forceRepaint = false; // Once a pixel is painted, reset it's forced state
       }
     }
 
