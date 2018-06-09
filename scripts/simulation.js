@@ -3,7 +3,7 @@ class SimEntity {
     This simple sim entity for conways game of life is alive
     or not alive.
   */
-    constructor(alive = false, lifeStyle = '#000000', deathStyle = '#ADD8E6', underpopulation = 2, overpopulation = 3, reproductionMin = 3, reproductionMax = 3) {
+  constructor(alive = false, lifeStyle = '#000000', deathStyle = '#ADD8E6', underpopulation = 2, overpopulation = 3, reproductionMin = 3, reproductionMax = 3) {
     this.alive = alive;
     this.lifeStyle = lifeStyle;
     this.deathStyle = deathStyle;
@@ -11,6 +11,9 @@ class SimEntity {
     this.overpopulation = overpopulation;
     this.reproductionMin = reproductionMin;
     this.reproductionMax = reproductionMax;
+
+    // Experimental improvement...
+    this.neighbors = [];
 
     // Reproduction min cannot be more than reproduction max
     if(this.reproductionMax < this.reproductionMin) {
@@ -36,11 +39,11 @@ class SimEntity {
       a live cell, as if by reproduction.
 
   */
-  update(neighbors) {
+  prepareUpdate() {
     let sum = 0;
     let alive = this.alive;
 
-    for(let n of neighbors){
+    for(let n of this.neighbors){
       if(n.alive && n !== this) sum++;
     }
 
@@ -54,7 +57,14 @@ class SimEntity {
       alive = true;
     }
 
-    return new SimEntity(alive, this.lifeStyle, this.deathStyle, this.underpopulation, this.overpopulation, this.reproductionMin, this.reproductionMax);
+    this.nextState = alive;
+  }
+
+  /*
+    Advance this pixel to it's nextState.
+  */
+  update() {
+    this.alive = this.nextState;
   }
 
   /*
@@ -98,13 +108,20 @@ class Simulation {
       }
     }
 
+    // Inform each pixel who it's neighbors are (performance optimization)
+    for(let i = 0; i < this.rows; i++) {
+      for(let j = 0; j < this.cols; j++) {
+        this.grid[i][j].neighbors = this.getNeighbors(i, j);
+      }
+    }
+
     // Setup the canvas
     let width = this.pixelSize * this.cols
     let height = this.pixelSize * this.rows
     this.canvas = document.createElement('canvas');
     this.canvas.width = width;
     this.canvas.height = height;
-    this.canvasCtx = this.canvas.getContext('2d');
+    this.canvasCtx = this.canvas.getContext('2d', { alpha: false});
 
     this.registerMouseListeners();
   }
@@ -155,18 +172,20 @@ class Simulation {
   */
   advanceRound() {
     if(this.mouseIsDown) return;
-    let nextState = [];
+
+    // First prepare each pixel (give it a next state)
     for(let i = 0; i < this.rows; i++) {
-      nextState.push([]);
       for(let j = 0; j < this.cols; j++) {
-        let entity = this.grid[i][j];
-        nextState[i].push(
-          entity.update(this.getNeighbors(i, j))
-        );
+        this.grid[i][j].prepareUpdate();
       }
     }
 
-    this.grid = nextState;
+    // Then actually advance them, once all the new states are computed
+    for(let i = 0; i < this.rows; i++) {
+      for(let j = 0; j < this.cols; j++) {
+        this.grid[i][j].update();
+      }
+    }
   }
 
   /*
@@ -175,15 +194,38 @@ class Simulation {
   repaint(force = false) {
     if(this.mouseIsDown && !force) return;
 
+    // Canvas optimization -- it's faster to paint by color than placement.
+    let byColor = {};
     for(let i = 0; i < this.rows; i++) {
       for(let j = 0; j < this.cols; j++) {
-        this.paintPixel(i, j);
+        let pixel = this.grid[i][j];
+        let color = pixel.alive ? pixel.lifeStyle : pixel.deathStyle;
+
+        if(byColor[color] === undefined) {
+          byColor[color] = []
+        }
+
+        byColor[color].push([i, j]);
+      }
+    }
+
+    for(let color in byColor) {
+      this.canvasCtx.fillStyle = color;
+      for(let [row, col] of byColor[color]){
+        this.canvasCtx.fillRect(
+          col * this.pixelSize,
+          row * this.pixelSize,
+          this.pixelSize,
+          this.pixelSize
+        );
       }
     }
   }
 
   /*
-    Paint an individual pixel.
+    Paint an individual pixel. This is not used by repaint because of a batch
+    optimziation. painting an individual pixel does take place when click events
+    happen.
   */
   paintPixel(row, col) {
     this.grid[row][col].setPaintStyles(this.canvasCtx);
