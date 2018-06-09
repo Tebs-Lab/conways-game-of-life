@@ -5,7 +5,7 @@ body {
 .container {
   margin: auto;
     display: grid;
-    grid-template-columns: 50% 30%;
+    grid-template-rows: 3;
     max-width: 80%;
 }
 
@@ -13,6 +13,7 @@ form {
   display: grid;
   width: 50%;
   margin: auto;
+  margin-bottom: 20px;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: 2;
 }
@@ -35,6 +36,7 @@ label, input[type=submit] {
 
 textarea {
   margin: 20px;
+  min-height: 80px;
   border-radius: 20px;
   padding: 10px;
 }

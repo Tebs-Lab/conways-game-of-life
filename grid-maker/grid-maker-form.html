@@ -14,7 +14,7 @@
         <input type="number" name="pixelSize" value=12 step=1 placeholder="Pixel Size">
 
         <label for="roundDelay">Round Time (ms)</label>
-        <input type="number" name="roundDelay" value=200 step=50 placeholder="Round Time (ms)">
+        <input type="number" name="roundDelay" value=200 step=5 placeholder="Round Time (ms)">
 
         <label for="chanceOfLife">Chance of Life</label>
         <input type="number" name="chanceOfLife" value=.1 step=.05 placeholder="Chance of Life">
@@ -37,8 +37,8 @@
         <input type="submit" name="submit" value="Generate Grid">
         <input id="embed-btn" type="submit" name="submit" value="Generate Embed">
       </form>
+      <iframe class="conways-iframe" scrolling="no"></iframe>
       <textarea readonly id="embed-text"></textarea>
     </div>
-    <iframe class="conways-iframe" scrolling="no"></iframe>
   </body>
 </html>

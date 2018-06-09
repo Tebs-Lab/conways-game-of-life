@@ -18,32 +18,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
   container.style.gridTemplateColumns = `repeat(${simCols}, 1fr)`;
   container.style.gridTemplateRows = `repeat(${simRows}, 1fr)`;
 
-  let ruleSets = [];
-  for(let underpopulation = 1; underpopulation < 4; underpopulation++) {
-    for (let reproduction = 0; reproduction < 4; reproduction++) {
-      for (let overpopulation = 1; overpopulation < 8; overpopulation++) {
-        ruleSets.push([underpopulation, reproduction, overpopulation]);
-      }
-    }
-  }
+  let ruleSets = generateRuleSets();
 
   for (let i = 0; i < numberOfSims; i++) {
-    let [lifeStyle, deathStyle] = randomColorPair();
     let sim = new Simulation(rows, cols, pixelSize, roundDelay, chanceOfLife)
     let ruleIndex = Math.floor(Math.random() * ruleSets.length);
-    let [underpopulation, overpopulation, reproductionMin, reproductionMax] = ruleSets[ruleIndex];
-
-
-    sim.grid.forEach((row) => {
-      row.forEach((entity) => {
-        entity.lifeStyle = lifeStyle;
-        entity.deathStyle = deathStyle;
-        entity.underpopulation = underpopulation;
-        entity.overpopulation = overpopulation;
-        entity.reproductionMin = reproductionMin;
-        entity.reproductionMax = reproductionMax;
-      });
-    });
+    updateRules(sim, ...ruleSets[ruleIndex])
+    setRandomColors(sim)
 
     container.append(sim.canvas);
     sim.advanceRound();
@@ -53,21 +34,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
     // Set this sim to reset it's rules occasionally!
     let waitPeriod = (Math.floor(Math.random() * 5000)) + 5000;
     setInterval(() => {
-      waitPeriod = (Math.floor(Math.random() * 5000)) + 5000;
-      let [lifeStyle, deathStyle] = randomColorPair();
-      let [underpopulation, overpopulation, reproductionMin, reproductionMax] = ruleSets[rand(0, ruleSets.length - 1)];
-
-      sim.grid.forEach((row) => {
-        row.forEach((entity) => {
-          entity.alive = Math.random() > chanceOfLife;
-          entity.lifeStyle = lifeStyle;
-          entity.deathStyle = deathStyle;
-          entity.underpopulation = underpopulation;
-          entity.overpopulation = overpopulation;
-          entity.reproductionMin = reproductionMin;
-          entity.reproductionMax = reproductionMax;
-        });
-      });
+      let ruleIndex = Math.floor(Math.random() * ruleSets.length);
+      updateRules(sim, ...ruleSets[ruleIndex])
+      resetLife(sim, chanceOfLife);
+      setRandomColors(sim)
       sim.repaint();
     }, waitPeriod);
   }
