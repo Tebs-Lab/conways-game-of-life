@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   let sim = createCreepyIvySim(rows, cols, pixelSize, roundDelay, chanceOfLife);
   container.append(sim.canvas);
 
-  if(Math.random() > .5) setRainbowScheme(sim);
+  if(Math.random() > .5) sim.setRainbowScheme();
 
   sim.start();
   window.addEventListener('keydown', (e) => {

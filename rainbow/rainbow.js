@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   let sim = createOceanSim(rows, cols, pixelSize, roundDelay, chanceOfLife);
   container.append(sim.canvas);
-  setRainbowScheme(sim);
+  sim.setRainbowScheme();
 
   sim.start();
   window.addEventListener('keydown', (e) => {

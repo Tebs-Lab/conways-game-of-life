@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   container.style.height = containerHeight + 'px';
   container.style.width = containerWidth + 'px';
 
-  let sim = new Simulation(rows, cols, pixelSize, roundDelay, chanceOfLife);
+  let sim = new ConwaySimulator(rows, cols, pixelSize, roundDelay, chanceOfLife);
   container.prepend(sim.canvas);
   sim.start();
 

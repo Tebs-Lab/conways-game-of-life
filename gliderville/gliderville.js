@@ -12,16 +12,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
   container.style.height = containerHeight + 'px';
   container.style.width = containerWidth + 'px';
 
-  let sim = new Simulation(rows, cols, pixelSize, roundDelay, chanceOfLife);
+  let sim = new ConwaySimulator(rows, cols, pixelSize, roundDelay, chanceOfLife);
   container.append(sim.canvas);
-  setRainbowScheme(sim);
+  sim.setRainbowScheme();
 
   let gliderCount = (rows * cols) / 400;
   let gliderMakers = [createDownRightGlider, createDownLeftGlider, createUpLeftGlider, createUpRightGlider];
   for(let i = 0; i < gliderCount; i++) {
-    let top = rand(0, sim.grid.length - 3);
-    let left = rand(0, sim.grid[0].length - 3);
-    let gMaker = gliderMakers[rand(0, 4)];
+    let top = randomInteger(0, sim.grid.length - 3);
+    let left = randomInteger(0, sim.grid[0].length - 3);
+    let gMaker = gliderMakers[randomInteger(0, 4)];
 
     gMaker(sim, top, left);
   }
@@ -30,9 +30,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
   let halfPointCol = Math.ceil(cols / 2);
   let barHeight = Math.ceil(rows / 4);
   let barWidth = Math.ceil(cols / 4);
-  applyRulesWithin(sim, halfPointRow - barHeight, halfPointRow + barHeight, halfPointCol - barWidth, halfPointCol + barWidth, 2, 4, 3, 3);
-  // barWidth += 10;
-  resetLifeWithin(sim, halfPointRow - barHeight, halfPointRow + barHeight, halfPointCol - barWidth, halfPointCol + barWidth, 0);
+  sim.setRulesWithin(halfPointRow - barHeight, halfPointRow + barHeight, halfPointCol - barWidth, halfPointCol + barWidth, 2, 4, 3, 3);
+  sim.resetLifeWithin(halfPointRow - barHeight, halfPointRow + barHeight, halfPointCol - barWidth, halfPointCol + barWidth, 0);
 
   sim.start();
   window.addEventListener('keydown', (e) => {

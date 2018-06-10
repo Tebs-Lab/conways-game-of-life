@@ -21,10 +21,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
   let ruleSets = generateRuleSets();
 
   for (let i = 0; i < numberOfSims; i++) {
-    let sim = new Simulation(rows, cols, pixelSize, roundDelay, chanceOfLife)
+    let sim = new ConwaySimulator(rows, cols, pixelSize, roundDelay, chanceOfLife)
     let ruleIndex = Math.floor(Math.random() * ruleSets.length);
-    updateRules(sim, ...ruleSets[ruleIndex])
-    setRandomColors(sim)
+    sim.setRules(...ruleSets[ruleIndex])
+    sim.setRandomPixelColors()
 
     container.append(sim.canvas);
     sim.advanceRound();
@@ -35,9 +35,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
     let waitPeriod = (Math.floor(Math.random() * 5000)) + 5000;
     setInterval(() => {
       let ruleIndex = Math.floor(Math.random() * ruleSets.length);
-      updateRules(sim, ...ruleSets[ruleIndex])
-      resetLife(sim, chanceOfLife);
-      setRandomColors(sim)
+      sim.setRules(...ruleSets[ruleIndex])
+      sim.resetLife(chanceOfLife);
+      sim.setRandomPixelColors()
       sim.repaint();
     }, waitPeriod);
   }

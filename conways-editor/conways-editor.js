@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   let rows = canvasHeight / pixelSize;
 
   let ruleSets = generateRuleSets();
-  let sim = new Simulation(rows, cols, pixelSize, roundDelay, chanceOfLife);
+  let sim = new ConwaySimulator(rows, cols, pixelSize, roundDelay, chanceOfLife);
 
   sim.canvas.style.height = canvasHeight + 'px';
   sim.canvas.style.width = canvasWidth + 'px';
@@ -48,14 +48,14 @@ function setupEventListeners(sim, ruleSets, startingRules, chanceOfLife) {
       parseInt(rulesForm.querySelector('#reproduction-max').value, 10)
     ];
 
-    updateRules(sim, ...rules);
+    sim.setRules(...rules);
   });
 
   // Select random rules from the list and apply them.
   document.querySelector('#random-rules-button').addEventListener('click', (e) => {
     let ruleIndex = Math.floor(Math.random() * ruleSets.length);
     let rules = ruleSets[ruleIndex];
-    if(!applyRulesToBox) updateRules(sim, ...rules);
+    if(!applyRulesToBox) sim.setRules(...rules);
 
     rulesForm.querySelector('#underpopulation').value = rules[0];
     rulesForm.querySelector('#overpopulation').value = rules[1];
@@ -67,18 +67,18 @@ function setupEventListeners(sim, ruleSets, startingRules, chanceOfLife) {
   let rainbow = false;
   document.querySelector('#toggle-rainbow-button').addEventListener('click', (e) => {
     if(!rainbow) {
-      setRainbowScheme(sim);
+      sim.setRainbowScheme();
     }
     else {
       lifeStyle = '#000000', deathStyle = '#ADD8E6'
-      resetColors(sim, lifeStyle, deathStyle);
+      setPixelColors(sim, lifeStyle, deathStyle);
     }
     rainbow = !rainbow;
   });
 
   // Pick a random color scheme
   document.querySelector('#random-color-button').addEventListener('click', (e) => {
-    setRandomColors(sim);
+    sim.setRandomPixelColors();
   });
 
   // Pause/Play
@@ -109,7 +109,7 @@ function setupEventListeners(sim, ruleSets, startingRules, chanceOfLife) {
   document.querySelector('#reset-life-button').addEventListener('click', (e) => {
     let chanceOfLife = rulesForm.querySelector('#percent-life-reset').value;
     chanceOfLife = parseFloat(chanceOfLife)
-    resetLife(sim, chanceOfLife);
+    sim.resetLife(chanceOfLife);
   });
 
   /**
@@ -156,9 +156,8 @@ function setupEventListeners(sim, ruleSets, startingRules, chanceOfLife) {
       parseInt(rulesForm.querySelector('#reproduction-max').value, 10)
     ];
 
-    applyRulesWithin(sim, rowStart, rowStop, colStart, colStop, ...rules)
-    let [lifeStyle, deathStyle] = randomColorPair();
-    applyColorsWithin(sim, rowStart, rowStop, colStart, colStop, lifeStyle, deathStyle)
+    sim.setRulesWithin(rowStart, rowStop, colStart, colStop, ...rules)
+    sim.applyRandomColorsWithin(rowStart, rowStop, colStart, colStop, lifeStyle, deathStyle)
   });
 
   sim.canvas.addEventListener('mousemove', (e) => {

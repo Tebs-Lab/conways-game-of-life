@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   for (var i = 0; i < 9; i++) {
     let [lifeStyle, deathStyle] = randomColorPair();
-    let sim = new Simulation(rows, cols, pixelSize, roundDelay, chanceOfLife);
+    let sim = new ConwaySimulator(rows, cols, pixelSize, roundDelay, chanceOfLife);
     sim.grid.forEach((row) => {
       row.forEach((entity) => {
         entity.lifeStyle = lifeStyle;

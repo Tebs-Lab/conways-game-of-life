@@ -1,8 +1,8 @@
 function createOceanSim(rows, cols, pixelSize, roundDelay) {
-  let sim = new Simulation(rows, cols, pixelSize, roundDelay, 0);
+  let sim = new ConwaySimulator(rows, cols, pixelSize, roundDelay, 0);
 
   let oceanHeight = Math.floor(rows * .75);
-  let liveBar = rand(oceanHeight, sim.grid.length);
+  let liveBar = randomInteger(oceanHeight, sim.grid.length);
   let [oUnderpopulation, oOverpopulation, oReproductionMin, oReproductionMax] = [2, 2, 3, 3];
   let [oceanLife, oceanDeath] = randomColorPair();
 
@@ -23,7 +23,7 @@ function createOceanSim(rows, cols, pixelSize, roundDelay) {
     });
   });
 
-  setRainbowSchemeWithin(sim, 0, sim.grid.length, 0, sim.grid[0].length);
+  sim.setRainbowScheme();
 
   return sim;
 }
@@ -32,7 +32,7 @@ function createOceanSim(rows, cols, pixelSize, roundDelay) {
   Create the "wild ocean" shape.
 */
 function createWildOceanSim(rows, cols, pixelSize, roundDelay) {
-  let sim = new Simulation(rows, cols, pixelSize, roundDelay, 0);
+  let sim = new ConwaySimulator(rows, cols, pixelSize, roundDelay, 0);
 
   let oceanHeight = Math.floor(rows / 2);
   let midOceanHeight = oceanHeight + Math.floor(oceanHeight / 2)
@@ -73,7 +73,7 @@ function createWildOceanSim(rows, cols, pixelSize, roundDelay) {
   Create the "creeping ivy" shape.
 */
 function createCreepyIvySim(rows, cols, pixelSize, roundDelay) {
-  let sim = new Simulation(rows, cols, pixelSize, roundDelay, 0);
+  let sim = new ConwaySimulator(rows, cols, pixelSize, roundDelay, 0);
 
   let barThickness = Math.ceil(rows / 7);
   let columnThinkness = Math.ceil(cols / 5);
@@ -107,7 +107,7 @@ function createCreepyIvySim(rows, cols, pixelSize, roundDelay) {
 }
 
 function createGridLockSim(rows, cols, pixelSize, roundDelay, chanceOfLife = .01, squareSize = 20) {
-  let sim = new Simulation(rows, cols, pixelSize, roundDelay, chanceOfLife);
+  let sim = new ConwaySimulator(rows, cols, pixelSize, roundDelay, chanceOfLife);
   let squaresPerRow = Math.floor(cols / squareSize);
   let [aLife, aDeath] = randomColorPair();
   let [bLife, bDeath] = randomColorPair();
