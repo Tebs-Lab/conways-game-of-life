@@ -1,14 +1,18 @@
-// For a wild experience...
-// let sim = createWildOceanSim(rows, cols, pixelSize, roundDelay, chanceOfLife, startingUpdate);
-// let sim = createOceanSim(rows, cols, pixelSize, roundDelay, chanceOfLife, startingUpdate);
 
 // Main Entry Point:
 document.addEventListener("DOMContentLoaded", function(event) {
   let pixelSize = 8;
-  let roundDelay = 100;
+  let roundDelay = 40;
   let chanceOfLife = .0;
 
+  resetSimulation(pixelSize, roundDelay, chanceOfLife);
+});
+
+function resetSimulation(pixelSize, roundDelay, chanceOfLife) {
   let container = document.getElementById('container');
+  let previousCanvas = container.querySelector('canvas');
+  if(previousCanvas) container.removeChild(previousCanvas);
+
   let canvasWidth = window.innerWidth * .78;
   let canvasHeight = window.innerHeight * .95;
   let cols = canvasWidth / pixelSize;
@@ -25,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   let startingRules = [2, 3, 3, 3];
   setupEventListeners(sim, ruleSets, startingRules, chanceOfLife);
-});
+}
 
 /*
   Set all the event listeners...
@@ -103,8 +107,26 @@ function setupEventListeners(sim, ruleSets, startingRules, chanceOfLife) {
     pause();
   });
 
+  /*
+    Listen for changes in the frame rate slider.
+  */
+  document.querySelector('#frame-rate').addEventListener('change', (e) => {
+    sim.stop();
+    sim.interRoundDelay = Math.floor(Math.pow(e.target.value, 1.3));
+    sim.start();
+  });
 
-
+  /*
+    Listen for chages in pixel size -- this change requires a total reset.
+  */
+  let ignorePixelSizeChange = false;
+  document.querySelector('#pixel-size').addEventListener('change', (e) => {
+    if(ignorePixelSizeChange) return;
+    ignorePixelSizeChange = true;
+    resetSimulation(parseInt(e.target.value), sim.interRoundDelay, .2);
+    delete sim;
+    ignorePixelSizeChange = false;
+  });
   // Kill all life.
   document.querySelector('#reset-life-button').addEventListener('click', (e) => {
     let chanceOfLife = rulesForm.querySelector('#percent-life-reset').value;
