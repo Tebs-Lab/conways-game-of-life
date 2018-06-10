@@ -251,7 +251,7 @@ class ConwaySimulator {
   applyRandomColorsWithin(rowStart, rowStop, colStart, colStop) {
     let baseHue = randomInteger(1, 360);
     let complementaryHue = (baseHue + randomInteger(90, 270) % 360);
-    this.setPixelColorsWithin(rowStart, rowStop, colStart, `hsl(${baseHue}, 100%, 60%)`, `hsl(${complementaryHue}, 100%, 60%)`)
+    this.applyColorsWithin(rowStart, rowStop, colStart, `hsl(${baseHue}, 100%, 60%)`, `hsl(${complementaryHue}, 100%, 60%)`)
   }
 
   /*
@@ -313,6 +313,7 @@ class ConwaySimulator {
         pixel.overpopulation = overpopulation;
         pixel.reproductionMin = reproductionMin;
         pixel.reproductionMax = reproductionMax;
+        pixel.forceRepaint = true;
       }
     }
   }

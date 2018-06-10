@@ -75,7 +75,7 @@ function setupEventListeners(sim, ruleSets, startingRules, chanceOfLife) {
     }
     else {
       lifeStyle = '#000000', deathStyle = '#ADD8E6'
-      setPixelColors(sim, lifeStyle, deathStyle);
+      sim.setPixelColors(lifeStyle, deathStyle);
     }
     rainbow = !rainbow;
   });
@@ -178,8 +178,8 @@ function setupEventListeners(sim, ruleSets, startingRules, chanceOfLife) {
       parseInt(rulesForm.querySelector('#reproduction-max').value, 10)
     ];
 
-    sim.setRulesWithin(rowStart, rowStop, colStart, colStop, ...rules)
-    sim.applyRandomColorsWithin(rowStart, rowStop, colStart, colStop, lifeStyle, deathStyle)
+    sim.setRulesWithin(rowStart, rowStop, colStart, colStop, ...rules);
+    sim.repaint();
   });
 
   sim.canvas.addEventListener('mousemove', (e) => {
