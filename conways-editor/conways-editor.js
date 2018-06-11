@@ -121,12 +121,14 @@ function setupEventListeners(sim, ruleSets, startingRules, chanceOfLife) {
   */
   let ignorePixelSizeChange = false;
   document.querySelector('#pixel-size').addEventListener('change', (e) => {
+    sim.stop()
     if(ignorePixelSizeChange) return;
     ignorePixelSizeChange = true;
     resetSimulation(parseInt(e.target.value), sim.interRoundDelay, .2);
     delete sim;
     ignorePixelSizeChange = false;
   });
+
   // Kill all life.
   document.querySelector('#reset-life-button').addEventListener('click', (e) => {
     let chanceOfLife = rulesForm.querySelector('#percent-life-reset').value;
