@@ -4,7 +4,8 @@ let COOL_RULES = {
   mayanBricks: [2, 4 ,1 ,2], // n by 2 single stripe does special stuff
   stability: [0, 7, 5, 8],
   floatingDiamonds: [5, 1, 3, 7],
-  rocketry: [0, 0, 2, 2] // 1x2 rectagle to create rocket ships
+  rocketry: [0, 0, 2, 2], // 1x2 rectagle to create rocket ships
+  flickerBox: [8, 8, 1, 1] // single dot, filled 3x3, and single lines all do cool stuff
 
 }
 

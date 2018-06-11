@@ -109,7 +109,8 @@ class ConwaySimulator {
 
   /*
     Optimized repaint that only updates pixels that have changed, and paints
-    in batches by color.
+    in batches by color. Using force will repaint all pixels regardless of their
+    state/previousState/nextState, which is slower.
   */
   repaint(force = false) {
     if(this.mouseIsDown && !force) return;
@@ -120,7 +121,7 @@ class ConwaySimulator {
       for(let j = 0; j < this.cols; j++) {
         let pixel = this.grid[i][j];
 
-        if(!pixel.forceRepaint && pixel.alive === pixel.previousState){
+        if(!force && !pixel.forceRepaint && pixel.alive === pixel.previousState){
           continue; // No need to repaint if the pixel didn't change
         }
 
@@ -338,8 +339,6 @@ class ConwaySimulator {
           y = Math.floor(e.offsetY / this.pixelSize);
         }
 
-        // let x = Math.floor(e.offsetX / this.pixelSize) || Math.floor(e.touches[0].clientX / this.pixelSize);
-        // let y = Math.floor(e.offsetY / this.pixelSize) ||  Math.floor(e.touches[0].clientY / this.pixelSize);
         this.grid[y][x].handleClick();
         this.paintPixel(y, x);
       }
