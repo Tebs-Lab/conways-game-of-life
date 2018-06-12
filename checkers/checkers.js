@@ -46,6 +46,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
     // Find boundaries of the checker square
     let checkerTop = Math.floor(y / checkerSize) * checkerSize;
     let checkerLeft = Math.floor(x / checkerSize) * checkerSize;
-    resetLifeWithin(sim, checkerTop, checkerTop + checkerSize, checkerLeft, checkerLeft + checkerSize, 0);
+    sim.resetLifeWithin(checkerTop, checkerTop + checkerSize, checkerLeft, checkerLeft + checkerSize, 0);
   });
 });

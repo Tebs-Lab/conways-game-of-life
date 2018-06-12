@@ -4,7 +4,6 @@ function createOceanSim(rows, cols, pixelSize, roundDelay) {
   let oceanHeight = Math.floor(rows * .75);
   let liveBar = randomInteger(oceanHeight, sim.grid.length);
   let [oUnderpopulation, oOverpopulation, oReproductionMin, oReproductionMax] = [2, 2, 3, 3];
-  let [oceanLife, oceanDeath] = randomColorPair();
 
   sim.grid.forEach((row, i) => {
     row.forEach((entity) => {
@@ -13,8 +12,6 @@ function createOceanSim(rows, cols, pixelSize, roundDelay) {
         entity.overpopulation = oOverpopulation;
         entity.reproductionMin = oReproductionMin;
         entity.reproductionMax = oReproductionMax;
-        entity.lifeStyle = oceanLife;
-        entity.deathStyle = oceanDeath;
       }
 
       if(i === liveBar) {
@@ -41,9 +38,6 @@ function createWildOceanSim(rows, cols, pixelSize, roundDelay) {
   let [oUnderpopulation, oOverpopulation, oReproductionMin, oReproductionMax] = [2, 2, 3, 3];
   let [lgUnderpopulation, lgOverpopulation, lgReproductionMin, lgReproductionMax] = [9, 0, 0, 4];
 
-  let [oceanLife, oceanDeath] = randomColorPair();
-  let [lifeGenLife, lifeGenDeath] = randomColorPair();
-
   sim.grid.forEach((row, i) => {
     row.forEach((entity, j) => {
       if(i > oceanHeight){
@@ -51,8 +45,6 @@ function createWildOceanSim(rows, cols, pixelSize, roundDelay) {
         entity.overpopulation = oOverpopulation;
         entity.reproductionMin = oReproductionMin;
         entity.reproductionMax = oReproductionMax;
-        entity.lifeStyle = oceanLife;
-        entity.deathStyle = oceanDeath;
       }
 
       if(i === midOceanHeight || i === sim.grid.length - 1 || (j === midOceanWidth)) {
@@ -60,8 +52,6 @@ function createWildOceanSim(rows, cols, pixelSize, roundDelay) {
         entity.overpopulation = lgOverpopulation;
         entity.reproductionMin = lgReproductionMin;
         entity.reproductionMax = lgReproductionMax;
-        entity.lifeStyle = lifeGenLife;
-        entity.deathStyle = lifeGenDeath;
       }
     });
   });
@@ -145,4 +135,10 @@ function createGridLockSim(rows, cols, pixelSize, roundDelay, chanceOfLife = .01
   }
 
   return sim;
+}
+
+function randomColorPair() {
+  let baseHue = randomInteger(1, 360);
+  let complementaryHue = (baseHue + randomInteger(90, 270) % 360);
+  return [`hsl(${baseHue}, 100%, 60%)`, `hsl(${complementaryHue}, 100%, 60%)`]
 }

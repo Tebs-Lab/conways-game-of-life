@@ -13,14 +13,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
   container.style.width = containerWidth + 'px';
 
   for (var i = 0; i < 9; i++) {
-    let [lifeStyle, deathStyle] = randomColorPair();
     let sim = new ConwaySimulator(rows, cols, pixelSize, roundDelay, chanceOfLife);
-    sim.grid.forEach((row) => {
-      row.forEach((entity) => {
-        entity.lifeStyle = lifeStyle;
-        entity.deathStyle = deathStyle;
-      });
-    });
+    sim.setRandomPixelColors();
     container.append(sim.canvas);
     sim.advanceRound();
     sim.repaint();
