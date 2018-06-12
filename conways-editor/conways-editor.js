@@ -25,6 +25,8 @@ function resetSimulation(pixelSize, roundDelay, rules, chanceOfLife) {
   let cols = canvasWidth / pixelSize;
   let rows = canvasHeight / pixelSize;
 
+
+
   CURRENT_SIM = new ConwaySimulator(rows, cols, pixelSize, roundDelay, chanceOfLife);
   CURRENT_SIM.setRules(...rules)
 
@@ -33,6 +35,9 @@ function resetSimulation(pixelSize, roundDelay, rules, chanceOfLife) {
   container.append(CURRENT_SIM.canvas);
   CURRENT_SIM.repaint();
   CURRENT_SIM.start();
+
+  // Easter egg...
+  window.CURRENT_SIM = CURRENT_SIM;
 }
 
 /*
