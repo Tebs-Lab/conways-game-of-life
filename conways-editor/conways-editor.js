@@ -40,6 +40,22 @@ function resetSimulation(pixelSize, roundDelay, rules, chanceOfLife) {
   window.CURRENT_SIM = CURRENT_SIM;
 }
 
+// Easter egg continued
+function randomCoolRule() {
+  let i = Math.floor(Math.random() * COOL_RULE_LIST.length);
+  let rules = COOL_RULE_LIST[i];
+  document.querySelector('#underpopulation').value = rules[0];
+  document.querySelector('#overpopulation').value = rules[1];
+  document.querySelector('#reproduction-min').value = rules[2];
+  document.querySelector('#reproduction-max').value = rules[3];
+  CURRENT_SIM.setRules(...rules);
+}
+
+console.log("Thanks for opening up the console, the curious are rewarded! Try running this function...");
+console.log('randomCoolRule()');
+console.log("And please explore the COOL_RULES, and CURRENT_SIM global variables.");
+
+
 /*
   Set all the event listeners. TODO: This function needs to be broken up and cleaned up a lot.
 */

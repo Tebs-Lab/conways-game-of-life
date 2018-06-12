@@ -53,12 +53,9 @@ const COOL_RULES = {
   }
 }
 
-console.log("Thanks for opening up the console, the curious are rewarded! Try the following...");
 var COOL_RULE_LIST = [];
 for(let type of Object.keys(COOL_RULES)) {
   for(let name in COOL_RULES[type]) {
     COOL_RULE_LIST.push(COOL_RULES[type][name]);
   }
 }
-console.log(`CURRENT_SIM.setRules(...COOL_RULE_LIST[0-${COOL_RULE_LIST.length - 1}])`);
-console.log("And please explore the COOL_RULES, and CURRENT_SIM global variables.");
