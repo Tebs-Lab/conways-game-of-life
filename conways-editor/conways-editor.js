@@ -25,10 +25,16 @@ function resetSimulation(pixelSize, roundDelay, rules, chanceOfLife) {
   let cols = canvasWidth / pixelSize;
   let rows = canvasHeight / pixelSize;
 
-
-
   CURRENT_SIM = new ConwaySimulator(rows, cols, pixelSize, roundDelay, chanceOfLife);
-  CURRENT_SIM.setRules(...rules)
+  CURRENT_SIM.setRules(...rules);
+
+  if(document.querySelector('#toggle-rainbow-button').inRainbowMode) {
+    CURRENT_SIM.setRainbowScheme();
+  }
+  else if(document.querySelector('#random-color-button').inRandomColorMode) {
+    let randomColorButton = document.querySelector('#random-color-button')
+    CURRENT_SIM.setPixelColors(randomColorButton.lifeStyle, randomColorButton.deathStyle);
+  }
 
   CURRENT_SIM.canvas.style.height = canvasHeight + 'px';
   CURRENT_SIM.canvas.style.width = canvasWidth + 'px';
@@ -97,22 +103,38 @@ function setupEventListeners(initialRules, initialPixelSize, initialRoundDelay, 
     rulesForm.querySelector('#reproduction-max').value = rules[3];
   });
 
-  // Toggle rainbow mode
-  let rainbow = false;
-  document.querySelector('#toggle-rainbow-button').addEventListener('click', (e) => {
-    if(!rainbow) {
+  // Toggle Color Mode's interact with each other.
+  // Saving these properties on the buttons is ... a hack.
+  let rainbowButton = document.querySelector('#toggle-rainbow-button');
+  rainbowButton.inRainbowMode = false;
+
+  let randomColorButton = document.querySelector('#random-color-button');
+  randomColorButton.inRandomColorMode = false;
+
+  /* RAINBOW SCHEME */
+  rainbowButton.addEventListener('click', (e) => {
+    if(!rainbowButton.inRainbowMode) {
       CURRENT_SIM.setRainbowScheme();
     }
     else {
       lifeStyle = '#000000', deathStyle = '#ADD8E6'
       CURRENT_SIM.setPixelColors(lifeStyle, deathStyle);
     }
-    rainbow = !rainbow;
+
+    rainbowButton.inRainbowMode = !e.target.inRainbowMode;
+    randomColorButton.inRandomColorMode = false;
   });
 
-  // Pick a random color scheme
-  document.querySelector('#random-color-button').addEventListener('click', (e) => {
+  /* RANDOM COLOR SCHEME */
+  randomColorButton.addEventListener('click', (e) => {
     CURRENT_SIM.setRandomPixelColors();
+
+    // This is a slight hack...
+    randomColorButton.lifeStyle = CURRENT_SIM.grid[0][0].lifeStyle;
+    randomColorButton.deathStyle = CURRENT_SIM.grid[0][0].deathStyle;
+
+    rainbowButton.inRainbowMode = false;
+    randomColorButton.inRandomColorMode = true;
   });
 
   // Pause/Play
