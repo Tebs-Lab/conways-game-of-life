@@ -37,7 +37,7 @@ const COOL_RULES = {
   growthStabalizers: {
     mayanBricks: [2, 4 ,1 ,2], // n by 2 single stripe does special stuff
     fillOut: [2, 7, 4, 5],
-    criticalMass, [3, 7, 4, 7]
+    criticalMass: [3, 7, 4, 7]
   },
 
   /*
