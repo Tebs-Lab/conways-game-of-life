@@ -6,7 +6,9 @@ const COOL_RULES = {
     floatingDiamondsOne: [5, 1, 3, 7],
     floatingDiamondsTwo: [6, 8, 3, 5],
     glitzyGlobs: [0, 7, 5, 8],
-    technoCrispy: [1, 6, 4, 8]
+    technoCrispy: [1, 6, 4, 8],
+    collapsingLines: [2, 4, 5, 6],
+    stableLines: [0, 4, 5, 6]
   },
 
   /*
@@ -34,7 +36,8 @@ const COOL_RULES = {
   */
   growthStabalizers: {
     mayanBricks: [2, 4 ,1 ,2], // n by 2 single stripe does special stuff
-    fillOut: [2, 7, 4, 5]
+    fillOut: [2, 7, 4, 5],
+    criticalMass: [3, 7, 4, 7]
   },
 
   /*

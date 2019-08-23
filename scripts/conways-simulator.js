@@ -303,6 +303,21 @@ class ConwaySimulator {
   }
 
   /*
+    Swap life and death styles across the center of the grid.
+  */
+  setYinYangMode() {
+    for(let i = 0; i < this.rows; i++) {
+      for(let j = 0; j < this.cols / 2; j++) {
+        let t = this.grid[i][j].lifeStyle;
+        this.grid[i][j].lifeStyle = this.grid[i][j].deathStyle;
+        this.grid[i][j].deathStyle = t;
+      }
+    }
+
+    this.repaint(true);
+  }
+
+  /*
     Given a bounding box, apply the currently selected rules to ONLY the
     pixels within the provided box.
   */
