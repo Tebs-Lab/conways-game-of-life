@@ -35,7 +35,7 @@ img {
 
 li {
   display: grid;
-  grid-template-rows: 50% 50%;
+  grid-template-rows: auto;
   margin-bottom: 1em;
 }
 
