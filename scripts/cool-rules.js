@@ -27,7 +27,8 @@ const COOL_RULES = {
     they keep roughly however much life you give them to start.
   */
   autoStabalizers: {
-    noDeathNoRebirth: [5, 7, 5, 6]
+    noDeathNoRebirth: [5, 7, 5, 6],
+    shatteredGlass: [2, 6 ,0 ,2]
   },
 
   /*
